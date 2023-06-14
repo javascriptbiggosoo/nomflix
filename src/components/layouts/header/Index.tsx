@@ -1,8 +1,14 @@
 import { Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
 import Search from "./Search";
+import {
+  motion,
+  useAnimation,
+  useMotionValueEvent,
+  useScroll,
+} from "framer-motion";
 
-const Nav = styled.nav`
+const Nav = styled(motion.nav)`
   width: 100vw;
   display: flex;
   justify-content: space-between;
@@ -10,7 +16,7 @@ const Nav = styled.nav`
   position: fixed;
   top: 0;
   height: 80px;
-  background-color: black;
+  /* background-color: black; */
   padding: 20px 60px;
   color: white;
 `;
@@ -40,11 +46,29 @@ const Item = styled.li`
   flex-direction: column;
 `;
 
+const NavVariants = {
+  top: { backgroundColor: "rgba(0,0,0,0)" },
+  scroll: { backgroundColor: "rgba(0,0,0,1)" },
+};
 export default function Header() {
+  const { scrollY, scrollYProgress } = useScroll();
+  const navAnimation = useAnimation();
+  console.log("Page scroll: ", scrollY);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest > 0) {
+      navAnimation.start(NavVariants.scroll);
+    } else {
+      navAnimation.start(NavVariants.top);
+    }
+    console.log("Page scroll: ", latest);
+  });
+
   const HomePage = useMatch("/");
   const TVPage = useMatch("/tv");
+
   return (
-    <Nav>
+    <Nav initial={{ backgroundColor: "rgba(0,0,0,1)" }} animate={navAnimation}>
       <Col>
         <Link to="/">
           <Logo xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 276.742">

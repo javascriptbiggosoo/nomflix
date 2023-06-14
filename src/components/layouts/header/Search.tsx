@@ -29,6 +29,13 @@ const Input = styled(motion.input)`
 export default function Search() {
   const [searchOpen, setSearchOpen] = useState(false);
 
+  const toggleSearch = () => {
+    if (searchOpen) {
+    } else {
+    }
+    setSearchOpen((prev) => !prev);
+  };
+
   return (
     <Container>
       <motion.svg
@@ -36,7 +43,7 @@ export default function Search() {
         fill="currentColor"
         viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg"
-        onClick={() => setSearchOpen((prev) => !prev)}
+        onClick={toggleSearch}
       >
         <path
           fillRule="evenodd"
