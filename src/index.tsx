@@ -5,6 +5,7 @@ import { RecoilRoot } from "recoil";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import App from "./App";
 import { theme } from "./theme";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const GlobalStyle = createGlobalStyle`
 
@@ -79,15 +80,19 @@ a {
 `;
 
 const container = document.getElementById("app");
+
+const client = new QueryClient();
 const root = createRoot(container!);
 root.render(
   <React.StrictMode>
     <RecoilRoot>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
+      <QueryClientProvider client={client}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
 
-        <App />
-      </ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </QueryClientProvider>
     </RecoilRoot>
   </React.StrictMode>
 );
