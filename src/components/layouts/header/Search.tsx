@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -27,12 +28,16 @@ const Input = styled(motion.input)`
 `;
 
 export default function Search() {
+  const { register, handleSubmit, setFocus, watch } = useForm();
   const [searchOpen, setSearchOpen] = useState(false);
 
-  const toggleSearch = () => {
+  useEffect(() => {
     if (searchOpen) {
-    } else {
+      setFocus("search");
+      // 입력창 비우기도 추가합시다.
     }
+  }, [searchOpen, setFocus]);
+  const toggleSearch = () => {
     setSearchOpen((prev) => !prev);
   };
 
@@ -52,6 +57,11 @@ export default function Search() {
         ></path>
       </motion.svg>
       <Input
+        {...register("search", {
+          onBlur: () => {
+            setSearchOpen(false);
+          },
+        })}
         placeholder="Titles, people, genres"
         animate={{ scaleX: searchOpen ? 1 : 0 }}
       ></Input>
