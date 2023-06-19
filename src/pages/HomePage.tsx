@@ -1,13 +1,30 @@
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { fetchNowPlaying } from "../apis/tmdb";
+import { useQuery } from "@tanstack/react-query";
+import { NowPlayingRoot, fetchNowPlaying } from "../apis/tmdb";
+import styled from "styled-components";
+import Loader from "../components/UI/Loader";
+import Banner from "../components/Banner";
+
+const Container = styled.div``;
 
 export default function HomePage() {
-  const { isLoading, data } = useQuery(
+  const { isLoading, data } = useQuery<NowPlayingRoot>(
     ["movies", "nowPlaying"],
     fetchNowPlaying
   );
 
   console.log(data, isLoading);
-  return <h1></h1>;
+  return (
+    <Container>
+      {isLoading ? (
+        <Loader></Loader>
+      ) : (
+        data && (
+          <>
+            <Banner bannerMovie={data.results[0]}></Banner>
+          </>
+        )
+      )}
+    </Container>
+  );
 }

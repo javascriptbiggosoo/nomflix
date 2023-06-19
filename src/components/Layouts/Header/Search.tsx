@@ -62,6 +62,7 @@ export default function Search() {
             setSearchOpen(false);
           },
         })}
+        initial={{ scaleX: 0 }}
         placeholder="Titles, people, genres"
         animate={{ scaleX: searchOpen ? 1 : 0 }}
       ></Input>
