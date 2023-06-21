@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Result, makeImagePath } from "../apis/tmdb";
 
 const Container = styled.div<{ bgPhoto: string }>`
-  height: 100vh;
+  height: 80vh;
   display: flex;
 
   flex-direction: column;
@@ -12,6 +12,7 @@ const Container = styled.div<{ bgPhoto: string }>`
   background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.75)),
     url(${(props) => makeImagePath(props.bgPhoto)});
   background-size: cover;
+  background-position: center;
 `;
 const Title = styled.h2`
   font-size: 60px;

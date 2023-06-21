@@ -9,14 +9,12 @@ import {
 } from "framer-motion";
 
 const Nav = styled(motion.nav)`
-  width: 100vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: fixed;
+  width: 100vw;
   top: 0;
-  height: 80px;
-  /* background-color: black; */
   padding: 20px 60px;
   color: white;
 `;
@@ -51,7 +49,7 @@ const NavVariants = {
   scroll: { backgroundColor: "rgba(0,0,0,1)" },
 };
 export default function Header() {
-  const { scrollY, scrollYProgress } = useScroll();
+  const { scrollY } = useScroll();
   const navAnimation = useAnimation();
   console.log("Page scroll: ", scrollY);
 
