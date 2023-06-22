@@ -32,6 +32,12 @@ const Movie = styled(motion.div)<{ bgPhoto: string }>`
     url(${(props) => props.bgPhoto});
   background-size: cover;
   background-position: center center;
+  &:first-child {
+    transform-origin: center left;
+  }
+  &:last-child {
+    transform-origin: center right;
+  }
 `;
 const NavButton = styled.button`
   position: absolute;
@@ -57,9 +63,12 @@ const NextButton = styled(NavButton)`
 const movieVariants = {
   normal: { scale: 1 },
   hover: {
-    scale: 1.375,
+    scale: 1.25,
+    y: -20,
     transition: {
-      delay: 0.5,
+      delay: 0.375,
+      type: "tween",
+      duration: 0.25,
     },
   },
 };
@@ -123,6 +132,7 @@ export default function Slider({ movies }: SliderProps) {
                 variants={movieVariants}
                 whileHover="hover"
                 bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
+                transition={{ type: "tween" }}
               ></Movie>
             ))}
         </Row>
