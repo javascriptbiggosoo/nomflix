@@ -76,12 +76,12 @@ export default function Header() {
         <Items>
           <Item>
             <Link to="/" style={{ fontWeight: HomePage ? "bold" : "normal" }}>
-              Movie
+              영화
             </Link>
           </Item>
           <Item>
             <Link to="/tv" style={{ fontWeight: TVPage ? "bold" : "normal" }}>
-              TV Shows
+              TV 프로그램
             </Link>
           </Item>
         </Items>
