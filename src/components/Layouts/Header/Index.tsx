@@ -66,7 +66,7 @@ export default function Header() {
   const TVPage = useMatch("/tv");
 
   return (
-    <Nav initial={{ backgroundColor: "rgba(0,0,0,1)" }} animate={navAnimation}>
+    <Nav initial={{ backgroundColor: "rgba(0,0,0,0)" }} animate={navAnimation}>
       <Col>
         <Link to="/">
           <Logo xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 276.742">

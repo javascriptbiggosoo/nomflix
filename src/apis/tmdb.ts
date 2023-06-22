@@ -1,4 +1,4 @@
-export interface NowPlayingRoot {
+export interface tmdbRoot {
   dates: Dates;
   page: number;
   results: Result[];
@@ -28,7 +28,11 @@ export interface Result {
   vote_count: number;
 }
 
-const options = {
+export function makeImagePath(id: string, format?: string) {
+  return `https://image.tmdb.org/t/p/${format ? format : "original"}/${id}`;
+}
+
+const nowPlayingOptions = {
   method: "GET",
   headers: {
     accept: "application/json",
@@ -37,13 +41,27 @@ const options = {
   },
 };
 
-export function fetchNowPlaying() {
-  return fetch(
+export async function fetchNowPlaying() {
+  const response = await fetch(
     "https://api.themoviedb.org/3/movie/now_playing?language=ko-KR&page=1&region=kr",
-    options
-  ).then((response) => response.json());
+    nowPlayingOptions
+  );
+  return await response.json();
 }
 
-export function makeImagePath(id: string, format?: string) {
-  return `https://image.tmdb.org/t/p/${format ? format : "original"}/${id}`;
+const upcomingOptions = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZjA1Y2ExNTE4Y2RiYjhiNGEwMzFmNmExYjg3MzNiMCIsInN1YiI6IjY0OGE5OGUxMDc2Y2U4MDEwNjBmZTExMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zJB_l-AUpcqKXCBpNxBP5xt6CT-EVYEt8mwV-nu7kjQ",
+  },
+};
+
+export async function fetchUpcoming() {
+  const response = await fetch(
+    "https://api.themoviedb.org/3/movie/upcoming?language=ko-KR&page=1",
+    upcomingOptions
+  );
+  return await response.json();
 }

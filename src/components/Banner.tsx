@@ -9,10 +9,10 @@ const Container = styled.div<{ bgPhoto: string }>`
   flex-direction: column;
   justify-content: center;
   padding: 60px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.75)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.625)),
     url(${(props) => makeImagePath(props.bgPhoto)});
   background-size: cover;
-  background-position: center;
+  background-position: center top;
 `;
 const Title = styled.h2`
   font-size: 60px;
