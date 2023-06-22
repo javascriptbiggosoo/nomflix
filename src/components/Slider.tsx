@@ -60,13 +60,17 @@ export default function Slider({ movies }: SliderProps) {
 
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
+  const [오른쪽이면1, set오른쪽이면1] = useState(1);
+
   const increaseIndex = () => {
     if (leaving) return;
+    set오른쪽이면1(1);
     setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
     toggleLeaving();
   };
   const decreaseIndex = () => {
     if (leaving) return;
+    set오른쪽이면1(-1);
     setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
     toggleLeaving();
   };
@@ -83,9 +87,9 @@ export default function Slider({ movies }: SliderProps) {
       <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
         <Row
           key={index}
-          initial={{ x: -window.outerWidth - gridGap }}
+          initial={{ x: 오른쪽이면1 * (window.outerWidth - gridGap) }}
           animate={{ x: 0 }}
-          exit={{ x: window.outerWidth + gridGap }}
+          exit={{ x: 오른쪽이면1 * (-window.outerWidth + gridGap) }}
           transition={{ type: "tween" }}
         >
           {movies

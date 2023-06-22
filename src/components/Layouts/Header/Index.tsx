@@ -76,7 +76,7 @@ export default function Header() {
         <Items>
           <Item>
             <Link to="/" style={{ fontWeight: HomePage ? "bold" : "normal" }}>
-              Home
+              Movie
             </Link>
           </Item>
           <Item>

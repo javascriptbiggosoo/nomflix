@@ -32,7 +32,7 @@ export function makeImagePath(id: string, format?: string) {
   return `https://image.tmdb.org/t/p/${format ? format : "original"}/${id}`;
 }
 
-const nowPlayingOptions = {
+const options = {
   method: "GET",
   headers: {
     accept: "application/json",
@@ -44,24 +44,15 @@ const nowPlayingOptions = {
 export async function fetchNowPlaying() {
   const response = await fetch(
     "https://api.themoviedb.org/3/movie/now_playing?language=ko-KR&page=1&region=kr",
-    nowPlayingOptions
+    options
   );
   return await response.json();
 }
 
-const upcomingOptions = {
-  method: "GET",
-  headers: {
-    accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZjA1Y2ExNTE4Y2RiYjhiNGEwMzFmNmExYjg3MzNiMCIsInN1YiI6IjY0OGE5OGUxMDc2Y2U4MDEwNjBmZTExMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zJB_l-AUpcqKXCBpNxBP5xt6CT-EVYEt8mwV-nu7kjQ",
-  },
-};
-
 export async function fetchUpcoming() {
   const response = await fetch(
-    "https://api.themoviedb.org/3/movie/upcoming?language=ko-KR&page=1",
-    upcomingOptions
+    "https://api.themoviedb.org/3/movie/upcoming?language=ko-KR&page=1&region=kr",
+    options
   );
   return await response.json();
 }
