@@ -1,4 +1,4 @@
-# React Masterclass
+# Nomflix - Netflix Clone Coding
 
 ## 프로젝트 설명
 
