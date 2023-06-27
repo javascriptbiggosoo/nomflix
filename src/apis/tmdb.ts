@@ -1,3 +1,7 @@
+const BASE_URL = "https://api.themoviedb.org/3";
+const AUTH_TOKEN =
+  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZjA1Y2ExNTE4Y2RiYjhiNGEwMzFmNmExYjg3MzNiMCIsInN1YiI6IjY0OGE5OGUxMDc2Y2U4MDEwNjBmZTExMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zJB_l-AUpcqKXCBpNxBP5xt6CT-EVYEt8mwV-nu7kjQ";
+
 export interface tmdbRoot {
   dates: Dates;
   page: number;
@@ -36,23 +40,23 @@ const options = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZjA1Y2ExNTE4Y2RiYjhiNGEwMzFmNmExYjg3MzNiMCIsInN1YiI6IjY0OGE5OGUxMDc2Y2U4MDEwNjBmZTExMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zJB_l-AUpcqKXCBpNxBP5xt6CT-EVYEt8mwV-nu7kjQ",
+    Authorization: AUTH_TOKEN,
   },
 };
 
-export async function fetchNowPlaying() {
-  const response = await fetch(
-    "https://api.themoviedb.org/3/movie/now_playing?language=ko-KR&page=1&region=kr",
-    options
-  );
+async function fetchFromApi(endpoint: string) {
+  const response = await fetch(`${BASE_URL}/${endpoint}`, options);
   return await response.json();
 }
 
-export async function fetchUpcoming() {
-  const response = await fetch(
-    "https://api.themoviedb.org/3/movie/upcoming?language=ko-KR&page=1&region=kr",
-    options
-  );
-  return await response.json();
+export function fetchNowPlayingMovie() {
+  return fetchFromApi("movie/now_playing?language=ko-KR&page=1&region=kr");
+}
+
+export function fetchUpcomingMovie() {
+  return fetchFromApi("movie/upcoming?language=ko-KR&page=1&region=kr");
+}
+
+export function fetchDetailMovie(id: number) {
+  return fetchFromApi(`movie/${id}?language=ko-KR`);
 }
