@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { tmdbRoot, fetchNowPlaying, fetchUpcoming } from "../apis/tmdb";
+import {
+  tmdbRoot,
+  fetchNowPlayingMovie,
+  fetchUpcomingMovie,
+} from "../apis/tmdb";
 import styled from "styled-components";
 import Loader from "../components/UI/Loader";
 import Banner from "../components/Banner";
 import Slider from "../components/Slider";
+import { useMatch } from "react-router-dom";
+import MovieModal from "../components/MovieModal";
 
 const Container = styled.div``;
 
@@ -13,13 +19,15 @@ export default function HomePage() {
     isLoading: isLoadingNowPlaying,
     data: nowPlayingData,
     isError: isErrorNowPlaying,
-  } = useQuery<tmdbRoot>(["movies", "nowPlaying"], fetchNowPlaying);
+  } = useQuery<tmdbRoot>(["movies", "nowPlaying"], fetchNowPlayingMovie);
+  const movieDetailPage = useMatch("/movies/:movieId");
+  console.log(movieDetailPage);
 
   const {
     isLoading: isLoadingUpcoming,
     data: upcomingData,
     isError: isErrorUpcoming,
-  } = useQuery<tmdbRoot>(["movies", "upcoming"], fetchUpcoming);
+  } = useQuery<tmdbRoot>(["movies", "upcoming"], fetchUpcomingMovie);
 
   const isLoading = isLoadingNowPlaying || isLoadingUpcoming;
   const isError = isErrorNowPlaying || isErrorUpcoming;
@@ -35,6 +43,10 @@ export default function HomePage() {
           <Banner bannerMovie={nowPlayingData.results[0]} />
           <Slider movies={nowPlayingData.results.slice(1, 19)} />
           <Slider movies={upcomingData.results.slice(1, 19)} />
+
+          {movieDetailPage?.params.movieId && (
+            <MovieModal movieId={movieDetailPage.params.movieId}></MovieModal>
+          )}
         </>
       )}
     </Container>

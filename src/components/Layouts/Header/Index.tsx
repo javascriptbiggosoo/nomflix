@@ -51,7 +51,7 @@ const NavVariants = {
 export default function Header() {
   const { scrollY } = useScroll();
   const navAnimation = useAnimation();
-  console.log("Page scroll: ", scrollY);
+  // console.log("Page scroll: ", scrollY);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 0) {
@@ -59,7 +59,7 @@ export default function Header() {
     } else {
       navAnimation.start(NavVariants.top);
     }
-    console.log("Page scroll: ", latest);
+    // console.log("Page scroll: ", latest);
   });
 
   const HomePage = useMatch("/");

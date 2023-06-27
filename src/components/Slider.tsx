@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Result, makeImagePath } from "../apis/tmdb";
 import useResize from "../hooks/useResize";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface SliderProps {
   movies: Result[];
@@ -26,6 +27,7 @@ const Row = styled(motion.div)<{ offset: number }>`
 const Movie = styled(motion.div)<{ bgPhoto: string }>`
   background-color: grey;
   height: 200px;
+  position: relative;
   color: white;
   font-size: 18px;
   background-image: linear-gradient(rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.375)),
@@ -38,6 +40,7 @@ const Movie = styled(motion.div)<{ bgPhoto: string }>`
   &:last-child {
     transform-origin: center right;
   }
+  cursor: pointer;
 `;
 const NavButton = styled.button`
   position: absolute;
@@ -77,6 +80,8 @@ const movieVariants = {
   hover: {
     scale: 1.25,
     y: -20,
+    zIndex: 1, // Hover시 zIndex를 높게 설정
+
     transition: {
       delay: 0.375,
       type: "tween",
@@ -96,6 +101,7 @@ const infoVariants = {
 };
 
 export default function Slider({ movies }: SliderProps) {
+  const navigate = useNavigate();
   const { width } = useResize();
 
   const [offset, setOffset] = useState(6);
@@ -132,6 +138,11 @@ export default function Slider({ movies }: SliderProps) {
     setLeaving((prev) => !prev);
   };
 
+  const handleMovieClick = (movieId: number) => {
+    navigate(`/movies/${movieId}`);
+    console.log(movieId);
+  };
+
   return (
     <Container>
       <PrevButton onClick={decreaseIndex}>&lt;</PrevButton>
@@ -150,8 +161,12 @@ export default function Slider({ movies }: SliderProps) {
             .slice(offset * index, offset * index + offset)
             .map((movie, i) => (
               <Movie
+                layoutId={"" + movie.id}
                 key={movie.id}
                 variants={movieVariants}
+                onClick={() => {
+                  handleMovieClick(movie.id);
+                }}
                 whileHover="hover"
                 bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
                 transition={{ type: "tween" }}

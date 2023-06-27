@@ -57,6 +57,6 @@ export function fetchUpcomingMovie() {
   return fetchFromApi("movie/upcoming?language=ko-KR&page=1&region=kr");
 }
 
-export function fetchDetailMovie(id: number) {
+export function fetchDetailMovie(id: number | string) {
   return fetchFromApi(`movie/${id}?language=ko-KR`);
 }
