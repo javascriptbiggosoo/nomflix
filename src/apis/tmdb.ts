@@ -2,20 +2,18 @@ const BASE_URL = "https://api.themoviedb.org/3";
 const AUTH_TOKEN =
   "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZjA1Y2ExNTE4Y2RiYjhiNGEwMzFmNmExYjg3MzNiMCIsInN1YiI6IjY0OGE5OGUxMDc2Y2U4MDEwNjBmZTExMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zJB_l-AUpcqKXCBpNxBP5xt6CT-EVYEt8mwV-nu7kjQ";
 
-export interface tmdbRoot {
-  dates: Dates;
+export interface ITmdbMovie {
+  dates: ITmdbMovieDates;
   page: number;
-  results: Result[];
+  results: ITmdbMovieResult[];
   total_pages: number;
   total_results: number;
 }
-
-export interface Dates {
+export interface ITmdbMovieDates {
   maximum: string;
   minimum: string;
 }
-
-export interface Result {
+export interface ITmdbMovieResult {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -30,7 +28,26 @@ export interface Result {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  media_type: "movie";
 }
+
+export interface ITmdbShowResult {
+  backdrop_path: string;
+  first_air_date: string;
+  genre_ids: number[];
+  id: number;
+  name: string;
+  original_language: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  vote_average: number;
+  vote_count: number;
+  media_type: "tv";
+}
+
+export type ITmdbResult = ITmdbMovieResult | ITmdbShowResult;
 
 export function makeImagePath(id: string, format?: string) {
   return `https://image.tmdb.org/t/p/${format ? format : "original"}/${id}`;
@@ -59,4 +76,9 @@ export function fetchUpcomingMovie() {
 
 export function fetchDetailMovie(id: number | string) {
   return fetchFromApi(`movie/${id}?language=ko-KR`);
+}
+export function fetchMultiSearch(query: string) {
+  return fetchFromApi(
+    `search/multi?language=ko-KR&page=1&region=kr&query=${query}`
+  );
 }

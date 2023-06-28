@@ -1,12 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Result, makeImagePath } from "../apis/tmdb";
+import { ITmdbMovieResult, makeImagePath } from "../apis/tmdb";
 import useResize from "../hooks/useResize";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface SliderProps {
-  movies: Result[];
+  movies: ITmdbMovieResult[];
 }
 
 const gridGap = 5;
@@ -70,18 +70,19 @@ const MovieInfo = styled(motion.div)`
 
 const PrevButton = styled(NavButton)`
   left: 10px;
+  z-index: 2;
 `;
 
 const NextButton = styled(NavButton)`
   right: 10px;
+  z-index: 2;
 `;
 const movieVariants = {
   normal: { scale: 1 },
   hover: {
     scale: 1.25,
     y: -20,
-    zIndex: 1, // Hover시 zIndex를 높게 설정
-
+    zIndex: 1,
     transition: {
       delay: 0.375,
       type: "tween",
@@ -168,7 +169,7 @@ export default function Slider({ movies }: SliderProps) {
                   handleMovieClick(movie.id);
                 }}
                 whileHover="hover"
-                bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
+                bgPhoto={makeImagePath(movie.backdrop_path, "w400")}
                 transition={{ type: "tween" }}
               >
                 <MovieInfo variants={infoVariants}>

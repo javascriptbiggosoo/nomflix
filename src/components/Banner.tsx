@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Result, makeImagePath } from "../apis/tmdb";
+import { ITmdbMovieResult, makeImagePath } from "../apis/tmdb";
 
 const Container = styled.div<{ bgPhoto: string }>`
   height: 80vh;
@@ -22,7 +22,7 @@ const OverView = styled.p`
   font-size: 30px;
 `;
 interface Props {
-  bannerMovie: Result;
+  bannerMovie: ITmdbMovieResult;
 }
 
 export default function Banner({ bannerMovie }: Props) {

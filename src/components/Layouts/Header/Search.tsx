@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const Container = styled.div`
+const Container = styled.form`
   display: flex;
   align-items: center;
   color: white;
@@ -13,7 +14,7 @@ const Container = styled.div`
   position: relative;
 `;
 
-const Input = styled(motion.input)`
+const SearchInput = styled(motion.input)`
   width: 275px;
   height: 35px;
   transform-origin: right center;
@@ -27,13 +28,18 @@ const Input = styled(motion.input)`
   border: 1px solid ${(props) => props.theme.white.lighter};
 `;
 
+interface IForm {
+  keyword: string;
+}
+
 export default function Search() {
-  const { register, handleSubmit, setFocus, watch } = useForm();
+  const { register, handleSubmit, setFocus, watch } = useForm<IForm>();
   const [searchOpen, setSearchOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (searchOpen) {
-      setFocus("search");
+      setFocus("keyword");
       // 입력창 비우기도 추가합시다.
     }
   }, [searchOpen, setFocus]);
@@ -41,8 +47,13 @@ export default function Search() {
     setSearchOpen((prev) => !prev);
   };
 
+  const onValid = (data: IForm) => {
+    console.log(data);
+    navigate(`/search?keyword=${data.keyword}`);
+  };
+
   return (
-    <Container>
+    <Container onSubmit={handleSubmit(onValid)}>
       <motion.svg
         animate={{ x: searchOpen ? -245 : 0 }}
         fill="currentColor"
@@ -56,16 +67,18 @@ export default function Search() {
           clipRule="evenodd"
         ></path>
       </motion.svg>
-      <Input
-        {...register("search", {
+      <SearchInput
+        {...register("keyword", {
+          required: true,
           onBlur: () => {
             setSearchOpen(false);
           },
+          minLength: 2,
         })}
         initial={{ scaleX: 0 }}
         placeholder="Titles, people, genres"
         animate={{ scaleX: searchOpen ? 1 : 0 }}
-      ></Input>
+      ></SearchInput>
     </Container>
   );
 }

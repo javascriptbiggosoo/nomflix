@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
-  tmdbRoot,
+  ITmdbMovie,
   fetchNowPlayingMovie,
   fetchUpcomingMovie,
 } from "../apis/tmdb";
@@ -19,7 +19,7 @@ export default function HomePage() {
     isLoading: isLoadingNowPlaying,
     data: nowPlayingData,
     isError: isErrorNowPlaying,
-  } = useQuery<tmdbRoot>(["movies", "nowPlaying"], fetchNowPlayingMovie);
+  } = useQuery<ITmdbMovie>(["movies", "nowPlaying"], fetchNowPlayingMovie);
   const movieDetailPage = useMatch("/movies/:movieId");
   console.log(movieDetailPage);
 
@@ -27,7 +27,7 @@ export default function HomePage() {
     isLoading: isLoadingUpcoming,
     data: upcomingData,
     isError: isErrorUpcoming,
-  } = useQuery<tmdbRoot>(["movies", "upcoming"], fetchUpcomingMovie);
+  } = useQuery<ITmdbMovie>(["movies", "upcoming"], fetchUpcomingMovie);
 
   const isLoading = isLoadingNowPlaying || isLoadingUpcoming;
   const isError = isErrorNowPlaying || isErrorUpcoming;

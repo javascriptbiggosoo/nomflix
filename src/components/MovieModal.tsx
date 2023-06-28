@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Overlay } from "./UI/Overlay";
 import { useNavigate } from "react-router-dom";
@@ -106,7 +106,7 @@ const Overview = styled.div`
 
 export default function MovieModal({ movieId }: IProps) {
   const navigate = useNavigate();
-  const { data } = useQuery<Root>(
+  const { data, isLoading } = useQuery<Root>(
     ["movies", "detail"],
     fetchDetailMovie.bind(null, +movieId)
   );
@@ -124,7 +124,9 @@ export default function MovieModal({ movieId }: IProps) {
 
   return (
     <>
-      {data ? (
+      {isLoading ? (
+        <Loader />
+      ) : data ? (
         <Overlay hideOverlay={hideOverlay}>
           <AnimatePresence>
             <Container layoutId={movieId}>
