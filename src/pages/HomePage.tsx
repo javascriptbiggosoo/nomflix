@@ -11,6 +11,7 @@ import Banner from "../components/Banner";
 import Slider from "../components/Slider";
 import { useMatch } from "react-router-dom";
 import MovieModal from "../components/MovieModal";
+import Error from "../components/UI/Error";
 
 const Container = styled.div``;
 
@@ -34,7 +35,7 @@ export default function HomePage() {
 
   if (isLoading) return <Loader />;
 
-  if (isError) return <div>There was an error loading the data.</div>;
+  if (isError) return <Error />;
 
   return (
     <Container>

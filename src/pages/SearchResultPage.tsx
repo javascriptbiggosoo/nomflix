@@ -8,6 +8,7 @@ import {
 } from "../apis/tmdb";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../components/UI/Loader";
+import Error from "../components/UI/Error";
 
 export default function SearchPage() {
   const [searchParams] = useSearchParams();
@@ -22,7 +23,7 @@ export default function SearchPage() {
   }
 
   if (isError) {
-    return <div>Error occurred</div>;
+    return <Error></Error>;
   }
 
   const movies = data.results.filter(
