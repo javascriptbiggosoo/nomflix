@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { ITmdbMovieResult, makeImagePath } from "../apis/tmdb";
 
-const Container = styled.div<{ bgPhoto: string }>`
+const Container = styled.section<{ bgPhoto: string }>`
   height: 80vh;
   display: flex;
 

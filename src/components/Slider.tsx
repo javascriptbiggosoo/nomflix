@@ -1,16 +1,17 @@
-import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+
 import { ITmdbMovieResult, makeImagePath } from "../apis/tmdb";
 import useResize from "../hooks/useResize";
-import { useNavigate } from "react-router-dom";
 
 interface SliderProps {
   movies: ITmdbMovieResult[];
 }
 
 const gridGap = 5;
-const Container = styled.div`
+const Container = styled.section`
   position: relative;
   height: 300px;
 `;
@@ -108,7 +109,7 @@ export default function Slider({ movies }: SliderProps) {
   const [offset, setOffset] = useState(6);
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
-  const [오른쪽이면1, set오른쪽이면1] = useState(1);
+  const [sliderDirection, setSliderDirection] = useState<1 | -1>(1);
 
   const maxIndex = Math.ceil(movies.length / offset) - 1;
 
@@ -122,14 +123,14 @@ export default function Slider({ movies }: SliderProps) {
 
   const increaseIndex = () => {
     if (leaving) return;
-    set오른쪽이면1(1);
+    setSliderDirection(1);
 
     setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
     toggleLeaving();
   };
   const decreaseIndex = () => {
     if (leaving) return;
-    set오른쪽이면1(-1);
+    setSliderDirection(-1);
 
     setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
     toggleLeaving();
@@ -153,9 +154,9 @@ export default function Slider({ movies }: SliderProps) {
         <Row
           offset={offset}
           key={index}
-          initial={{ x: 오른쪽이면1 * (window.outerWidth - gridGap) }}
+          initial={{ x: sliderDirection * (window.outerWidth - gridGap) }}
           animate={{ x: 0 }}
-          exit={{ x: 오른쪽이면1 * (-window.outerWidth + gridGap) }}
+          exit={{ x: sliderDirection * (-window.outerWidth + gridGap) }}
           transition={{ type: "tween" }}
         >
           {movies

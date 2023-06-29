@@ -1,19 +1,21 @@
 import React from "react";
+import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
+import { useMatch } from "react-router-dom";
+
+import Slider from "../components/Slider";
+import MovieModal from "../components/MovieModal";
+import Loader from "../components/UI/Loader";
+import Banner from "../components/Banner";
+import Error from "../components/UI/Error";
+
 import {
   ITmdbMovie,
   fetchNowPlayingMovie,
   fetchUpcomingMovie,
 } from "../apis/tmdb";
-import styled from "styled-components";
-import Loader from "../components/UI/Loader";
-import Banner from "../components/Banner";
-import Slider from "../components/Slider";
-import { useMatch } from "react-router-dom";
-import MovieModal from "../components/MovieModal";
-import Error from "../components/UI/Error";
 
-const Container = styled.div``;
+const Container = styled.main``;
 
 export default function HomePage() {
   const {
@@ -22,7 +24,7 @@ export default function HomePage() {
     isError: isErrorNowPlaying,
   } = useQuery<ITmdbMovie>(["movies", "nowPlaying"], fetchNowPlayingMovie);
   const movieDetailPage = useMatch("/movies/:movieId");
-  console.log(movieDetailPage);
+  // console.log(movieDetailPage);
 
   const {
     isLoading: isLoadingUpcoming,
