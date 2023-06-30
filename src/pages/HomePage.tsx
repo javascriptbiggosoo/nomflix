@@ -44,8 +44,14 @@ export default function HomePage() {
       {nowPlayingData && upcomingData && (
         <>
           <Banner bannerMovie={nowPlayingData.results[0]} />
-          <Slider movies={nowPlayingData.results.slice(1, 19)} />
-          <Slider movies={upcomingData.results.slice(1, 19)} />
+          <Slider
+            sliderTitle="현재 상영작"
+            movies={nowPlayingData.results.slice(1, 19)}
+          />
+          <Slider
+            sliderTitle="상영 예정작"
+            movies={upcomingData.results.slice(1, 19)}
+          />
 
           {movieDetailPage?.params.movieId && (
             <MovieModal movieId={movieDetailPage.params.movieId}></MovieModal>

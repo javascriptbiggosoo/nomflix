@@ -5,15 +5,25 @@ import { useNavigate } from "react-router-dom";
 
 import { ITmdbMovieResult, makeImagePath } from "../apis/tmdb";
 import useResize from "../hooks/useResize";
+import MovieInfo from "./Thumbnail/ThumbnailInfo";
+import Thumbnail from "./Thumbnail/Index";
 
 interface SliderProps {
   movies: ITmdbMovieResult[];
+  sliderTitle: string;
 }
 
 const gridGap = 5;
 const Container = styled.section`
   position: relative;
   height: 300px;
+  margin: 0px 20px;
+`;
+const SliderTitle = styled.h3`
+  position: absolute;
+  top: -120px;
+  font-size: 28px;
+  font-weight: 400;
 `;
 const Row = styled(motion.div)<{ offset: number }>`
   position: absolute;
@@ -25,24 +35,25 @@ const Row = styled(motion.div)<{ offset: number }>`
   grid-gap: ${gridGap}px;
   margin-bottom: 5px;
 `;
-const Movie = styled(motion.div)<{ bgPhoto: string }>`
-  background-color: grey;
-  height: 200px;
-  position: relative;
-  color: white;
-  font-size: 18px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.375)),
-    url(${(props) => props.bgPhoto});
-  background-size: cover;
-  background-position: center center;
-  &:first-child {
-    transform-origin: center left;
-  }
-  &:last-child {
-    transform-origin: center right;
-  }
-  cursor: pointer;
-`;
+// const Movie = styled(motion.div)<{ bgPhoto: string }>`
+//   background-color: grey;
+//   height: 200px;
+//   position: relative;
+//   color: white;
+//   font-size: 18px;
+//   background-image: linear-gradient(rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.375)),
+//     url(${(props) => props.bgPhoto});
+//   background-size: cover;
+//   background-position: center center;
+//   &:first-child {
+//     transform-origin: center left;
+//   }
+//   &:last-child {
+//     transform-origin: center right;
+//   }
+//   cursor: pointer;
+// `;
+
 const NavButton = styled.button`
   position: absolute;
   transform: translateY(-50%);
@@ -56,19 +67,6 @@ const NavButton = styled.button`
     background: rgba(0, 0, 0, 0.9);
   }
 `;
-const MovieInfo = styled(motion.div)`
-  padding: 20px;
-  background-color: ${(props) => props.theme.black.lighter};
-  opacity: 0;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-`;
-
 const PrevButton = styled(NavButton)`
   left: 10px;
   z-index: 2;
@@ -78,31 +76,8 @@ const NextButton = styled(NavButton)`
   right: 10px;
   z-index: 2;
 `;
-const movieVariants = {
-  normal: { scale: 1 },
-  hover: {
-    scale: 1.25,
-    y: -20,
-    zIndex: 1,
-    transition: {
-      delay: 0.375,
-      type: "tween",
-      duration: 0.25,
-    },
-  },
-};
-const infoVariants = {
-  hover: {
-    opacity: 1,
-    transition: {
-      delay: 0.375,
-      type: "tween",
-      duration: 0.25,
-    },
-  },
-};
 
-export default function Slider({ movies }: SliderProps) {
+export default function Slider({ movies, sliderTitle }: SliderProps) {
   const navigate = useNavigate();
   const { width } = useResize();
 
@@ -147,6 +122,7 @@ export default function Slider({ movies }: SliderProps) {
 
   return (
     <Container>
+      <SliderTitle>{sliderTitle}</SliderTitle>
       <PrevButton onClick={decreaseIndex}>&lt;</PrevButton>
       <NextButton onClick={increaseIndex}>&gt;</NextButton>
 
@@ -162,21 +138,12 @@ export default function Slider({ movies }: SliderProps) {
           {movies
             .slice(offset * index, offset * index + offset)
             .map((movie, i) => (
-              <Movie
-                layoutId={"" + movie.id}
-                key={movie.id}
-                variants={movieVariants}
-                onClick={() => {
+              <Thumbnail
+                onMovieClick={() => {
                   handleMovieClick(movie.id);
                 }}
-                whileHover="hover"
-                bgPhoto={makeImagePath(movie.backdrop_path, "w400")}
-                transition={{ type: "tween" }}
-              >
-                <MovieInfo variants={infoVariants}>
-                  <h3>{movie.title}</h3>
-                </MovieInfo>
-              </Movie>
+                movie={movie}
+              ></Thumbnail>
             ))}
         </Row>
       </AnimatePresence>
