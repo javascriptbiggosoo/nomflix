@@ -3,7 +3,7 @@ import { ITmdbMovieResult, makeImagePath } from "../../apis/tmdb";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 
-import MovieInfo from "./ThumbnailInfo";
+import ThumbnailInfo from "./ThumbnailInfo";
 
 interface IProps {
   movie: ITmdbMovieResult;
@@ -57,7 +57,7 @@ export default function Thumbnail({ movie, onMovieClick }: IProps) {
         bgPhoto={makeImagePath(movie.backdrop_path, "w400")}
         transition={{ type: "tween" }}
       >
-        <MovieInfo movieTitle={movie.title}></MovieInfo>
+        <ThumbnailInfo title={movie.title}></ThumbnailInfo>
       </Container>
     </AnimatePresence>
   );

@@ -3,9 +3,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-import { ITmdbMovieResult, makeImagePath } from "../apis/tmdb";
+import { ITmdbMovieResult } from "../apis/tmdb";
 import useResize from "../hooks/useResize";
-import MovieInfo from "./Thumbnail/ThumbnailInfo";
 import Thumbnail from "./Thumbnail/Index";
 
 interface SliderProps {

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 interface IProps {
-  movieTitle: string;
+  title: string;
 }
 
 const Container = styled(motion.div)`
@@ -30,10 +30,10 @@ const infoVariants = {
   },
 };
 
-export default function MovieInfo({ movieTitle }: IProps) {
+export default function ThumbnailInfo({ title }: IProps) {
   return (
     <Container variants={infoVariants}>
-      <h3>{movieTitle}</h3>
+      <h3>{title}</h3>
     </Container>
   );
 }
