@@ -102,7 +102,7 @@ export default function Slider({ movies, sliderTitle }: SliderProps) {
     } else {
       navigate(`/tv/${movie.id}`);
     }
-    console.log(movie.id);
+    // console.log(movie.id);
   };
 
   return (
@@ -124,6 +124,7 @@ export default function Slider({ movies, sliderTitle }: SliderProps) {
             .slice(offset * index, offset * index + offset)
             .map((movie, i) => (
               <Thumbnail
+                key={i}
                 onMovieClick={() => {
                   handleMovieClick(movie);
                 }}

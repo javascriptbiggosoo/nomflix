@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   ITmdbMovieResult,
   ITmdbResult,
@@ -10,14 +10,18 @@ import { useQuery } from "@tanstack/react-query";
 import Loader from "../components/UI/Loader";
 import Error from "../components/UI/Error";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
+import useResize from "../hooks/useResize";
+import Thumbnail from "../components/Thumbnail/Index";
 
 const Container = styled.main`
-  position: relative;
   top: 70px;
+
+  position: relative;
   margin: 0 auto;
   margin: auto;
   margin: 0px 20px;
-  z-index: -1;
+  /* z-index: -1; */
 `;
 const MainTitle = styled.h1`
   font-size: 48px;
@@ -26,10 +30,32 @@ const MainTitle = styled.h1`
 const SectionTitle = styled.h3`
   font-size: 28px;
   font-weight: 400;
+
+  margin-bottom: 20px;
+`;
+const gridGap = 5;
+const Row = styled.div<{ offset: number }>`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(${(props) => props.offset}, 1fr);
+  grid-gap: ${gridGap}px;
+  margin-bottom: 40px;
 `;
 
 export default function SearchPage() {
+  const [offset, setOffset] = useState(6);
   const [searchParams] = useSearchParams();
+  const { width } = useResize();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (width > 1200) {
+      setOffset(6);
+    } else if (width > 800) {
+      setOffset(3);
+    }
+  }, [width]);
+
   const keyword = searchParams.get("keyword");
   const { data, isLoading, isError } = useQuery(
     ["search", keyword],
@@ -60,48 +86,32 @@ export default function SearchPage() {
         검색결과입니다.
       </MainTitle>
       <SectionTitle>Movies</SectionTitle>
-      {movies.map((movie: ITmdbMovieResult) => (
-        <div
-          key={movie.id}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            margin: "20px",
-          }}
-        >
-          <img
-            src={makeImagePath(movie.backdrop_path, "w500")}
-            alt={movie.title}
-          />
-          <h2>{movie.title}</h2>
-          <p>{movie.release_date}</p>
-          <p>Popularity: {movie.popularity}</p>
-          <p>Vote Average: {movie.vote_average}</p>
-        </div>
-      ))}
+
+      <Row offset={offset}>
+        {movies.map((movie: ITmdbMovieResult, idx: number) => (
+          <Thumbnail
+            key={idx}
+            onMovieClick={() => {
+              return;
+            }}
+            movie={movie}
+          ></Thumbnail>
+        ))}
+      </Row>
 
       <SectionTitle>TV Shows</SectionTitle>
-      {tvShows.map((show: ITmdbShowResult) => (
-        <div
-          key={show.id}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            margin: "20px",
-          }}
-        >
-          <img
-            src={makeImagePath(show.backdrop_path, "w500")}
-            alt={show.name}
-          />
-          <h2>{show.name}</h2>
-          <p>{show.first_air_date}</p>
-          <p>Popularity: {show.popularity}</p>
-          <p>Vote Average: {show.vote_average}</p>
-        </div>
-      ))}
+
+      <Row offset={offset}>
+        {tvShows.map((show: ITmdbShowResult, idx: number) => (
+          <Thumbnail
+            key={idx}
+            onMovieClick={() => {
+              return;
+            }}
+            movie={show}
+          ></Thumbnail>
+        ))}
+      </Row>
     </Container>
   );
 }

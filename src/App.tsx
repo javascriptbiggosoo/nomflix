@@ -3,7 +3,6 @@ import HomePage from "./pages/HomePage";
 import TVPage from "./pages/TVPage";
 import SearchPage from "./pages/SearchResultPage";
 import RootLayout from "./pages/RootLayout";
-import { basename } from "path";
 
 const router = createBrowserRouter(
   [

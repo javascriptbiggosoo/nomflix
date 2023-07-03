@@ -4,8 +4,8 @@ import Header from "../components/Layouts/Header/Index";
 export default function RootLayout() {
   return (
     <>
-      <Header></Header>
-      <Outlet></Outlet>
+      <Header />
+      <Outlet />
     </>
   );
 }

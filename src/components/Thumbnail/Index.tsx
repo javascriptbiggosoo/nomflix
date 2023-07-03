@@ -32,7 +32,7 @@ const Container = styled(motion.div)<{ bgPhoto: string }>`
   cursor: pointer;
 `;
 
-const movieVariants = {
+const containerVariants = {
   normal: { scale: 1 },
   hover: {
     scale: 1.25,
@@ -52,7 +52,7 @@ export default function Thumbnail({ movie, onMovieClick }: IProps) {
       <Container
         layoutId={"" + movie.id}
         key={movie.id}
-        variants={movieVariants}
+        variants={containerVariants}
         onClick={() => {
           onMovieClick(movie.id);
         }}

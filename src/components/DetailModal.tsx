@@ -42,6 +42,10 @@ const Image = styled(motion.div)<{ imgSrc: string }>`
   background-repeat: no-repeat;
   background-position: center center;
 `;
+const Video = styled.iframe`
+  width: 100%;
+  height: 281.25px;
+`;
 const Title = styled.h2`
   position: relative;
 
