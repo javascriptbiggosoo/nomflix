@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { ITmdbMovieResult, ITmdbShowResult, makeImagePath } from "../apis/tmdb";
 

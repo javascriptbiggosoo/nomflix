@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { useMatch } from "react-router-dom";

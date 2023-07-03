@@ -1,8 +1,12 @@
-# React Masterclass
+# Nomflix
 
 ## 프로젝트 설명
 
-이 프로젝트는 React, TypeScript, styled-components 등을 활용하여 개발된 웹 애플리케이션입니다. 최근에는 npm의 create-react-app에서 yarn의 Vite로 프로젝트를 전환하였습니다. 이로써 더 빠른 개발 환경과 HMR(Hot Module Replacement), ESBuild 등의 이점을 활용할 수 있게 되었습니다.
+이 프로젝트는 React, TypeScript, styled-components 등을 활용하여 영화 및 TV 프로그램 정보를 제공하는 웹 애플리케이션입니다. 최근에는 npm의 create-react-app에서 yarn의 Vite로 프로젝트를 전환하였습니다. 이로써 더 빠른 개발 환경과 HMR(Hot Module Replacement), ESBuild 등의 이점을 활용할 수 있게 되었습니다.
+
+## 배포 사이트
+
+[Nomflix](https://javascriptbiggosoo.github.io/nomflix)
 
 ## 주요 기술 스택
 
@@ -14,9 +18,9 @@
 
 ## 설치 및 설정
 
-1. 프로젝트를 클론합니다: `git clone https://github.com/tbs01215/react-masterclass.git`
-2. 디렉토리로 이동합니다: `cd react-masterclass`
-3. 의존성을 설치합니다: `yarn install`
+1. 프로젝트를 클론합니다: `git clone https://github.com/javascriptbiggosoo/nomflix.git`
+2. 디렉토리로 이동합니다: `cd nomflix`
+3. 의존성을 설치합니다: `yarn`
 4. 프로젝트를 시작합니다: `yarn dev`
 
 ## 사용 방법
