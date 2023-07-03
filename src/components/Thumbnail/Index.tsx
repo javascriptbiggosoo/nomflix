@@ -1,12 +1,16 @@
 import React from "react";
-import { ITmdbMovieResult, makeImagePath } from "../../apis/tmdb";
+import {
+  ITmdbMovieResult,
+  ITmdbShowResult,
+  makeImagePath,
+} from "../../apis/tmdb";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 
 import ThumbnailInfo from "./ThumbnailInfo";
 
 interface IProps {
-  movie: ITmdbMovieResult;
+  movie: ITmdbMovieResult | ITmdbShowResult;
   onMovieClick: (id: number) => void;
 }
 
@@ -57,7 +61,9 @@ export default function Thumbnail({ movie, onMovieClick }: IProps) {
         bgPhoto={makeImagePath(movie.backdrop_path, "w400")}
         transition={{ type: "tween" }}
       >
-        <ThumbnailInfo title={movie.title}></ThumbnailInfo>
+        <ThumbnailInfo
+          title={"name" in movie ? movie.name : movie.title}
+        ></ThumbnailInfo>
       </Container>
     </AnimatePresence>
   );

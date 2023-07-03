@@ -3,12 +3,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-import { ITmdbMovieResult } from "../apis/tmdb";
+import { ITmdbMovieResult, ITmdbShowResult } from "../apis/tmdb";
 import useResize from "../hooks/useResize";
 import Thumbnail from "./Thumbnail/Index";
 
 interface SliderProps {
-  movies: ITmdbMovieResult[];
+  movies: ITmdbMovieResult[] | ITmdbShowResult[];
   sliderTitle: string;
 }
 
@@ -34,24 +34,6 @@ const Row = styled(motion.div)<{ offset: number }>`
   grid-gap: ${gridGap}px;
   margin-bottom: 5px;
 `;
-// const Movie = styled(motion.div)<{ bgPhoto: string }>`
-//   background-color: grey;
-//   height: 200px;
-//   position: relative;
-//   color: white;
-//   font-size: 18px;
-//   background-image: linear-gradient(rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.375)),
-//     url(${(props) => props.bgPhoto});
-//   background-size: cover;
-//   background-position: center center;
-//   &:first-child {
-//     transform-origin: center left;
-//   }
-//   &:last-child {
-//     transform-origin: center right;
-//   }
-//   cursor: pointer;
-// `;
 
 const NavButton = styled.button`
   position: absolute;
@@ -114,9 +96,13 @@ export default function Slider({ movies, sliderTitle }: SliderProps) {
     setLeaving((prev) => !prev);
   };
 
-  const handleMovieClick = (movieId: number) => {
-    navigate(`/movies/${movieId}`);
-    console.log(movieId);
+  const handleMovieClick = (movie: ITmdbMovieResult | ITmdbShowResult) => {
+    if ("title" in movie) {
+      navigate(`/movies/${movie.id}`);
+    } else {
+      navigate(`/tv/${movie.id}`);
+    }
+    console.log(movie.id);
   };
 
   return (
@@ -139,7 +125,7 @@ export default function Slider({ movies, sliderTitle }: SliderProps) {
             .map((movie, i) => (
               <Thumbnail
                 onMovieClick={() => {
-                  handleMovieClick(movie.id);
+                  handleMovieClick(movie);
                 }}
                 movie={movie}
               ></Thumbnail>

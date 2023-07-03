@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useMatch } from "react-router-dom";
 
 import Slider from "../components/Slider";
-import MovieModal from "../components/MovieModal";
+import DetailModal from "../components/DetailModal";
 import Loader from "../components/UI/Loader";
 import Banner from "../components/Banner";
 import Error from "../components/UI/Error";
@@ -54,7 +54,10 @@ export default function HomePage() {
           />
 
           {movieDetailPage?.params.movieId && (
-            <MovieModal movieId={movieDetailPage.params.movieId}></MovieModal>
+            <DetailModal
+              mediaType="movie"
+              mediaId={movieDetailPage.params.movieId}
+            ></DetailModal>
           )}
         </>
       )}

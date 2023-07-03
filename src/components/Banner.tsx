@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { ITmdbMovieResult, makeImagePath } from "../apis/tmdb";
+import { ITmdbMovieResult, ITmdbShowResult, makeImagePath } from "../apis/tmdb";
+
+interface Props {
+  bannerMovie: ITmdbMovieResult | ITmdbShowResult;
+}
 
 const Container = styled.section<{ bgPhoto: string }>`
   height: 80vh;
@@ -21,14 +25,13 @@ const Title = styled.h2`
 const OverView = styled.p`
   font-size: 30px;
 `;
-interface Props {
-  bannerMovie: ITmdbMovieResult;
-}
 
 export default function Banner({ bannerMovie }: Props) {
   return (
     <Container bgPhoto={bannerMovie.backdrop_path}>
-      <Title>{bannerMovie.title}</Title>
+      <Title>
+        {"name" in bannerMovie ? bannerMovie.name : bannerMovie.title}
+      </Title>
       <OverView>{bannerMovie.overview}</OverView>
     </Container>
   );
