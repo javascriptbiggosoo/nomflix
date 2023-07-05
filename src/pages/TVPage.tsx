@@ -46,7 +46,7 @@ export default function TVPage() {
           <Banner bannerMovie={trendingData.results[0]} />
           <Slider
             sliderTitle="화제의 프로그램"
-            movies={trendingData.results.slice(1, 19)}
+            allMedia={trendingData.results.slice(1, 19)}
           />
           {/* <Slider
             sliderTitle="상영 예정작"

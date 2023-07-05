@@ -45,11 +45,11 @@ export default function HomePage() {
           <Banner bannerMovie={nowPlayingData.results[0]} />
           <Slider
             sliderTitle="현재 상영작"
-            movies={nowPlayingData.results.slice(1, 19)}
+            allMedia={nowPlayingData.results.slice(1, 19)}
           />
           <Slider
             sliderTitle="상영 예정작"
-            movies={upcomingData.results.slice(1, 19)}
+            allMedia={upcomingData.results.slice(1, 19)}
           />
 
           {movieDetailPage?.params.movieId && (

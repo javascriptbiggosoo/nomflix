@@ -3,12 +3,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-import { ITmdbMovieResult, ITmdbShowResult } from "../apis/tmdb";
+import { ITmdbMovieResult, ITmdbShowResult, makeImagePath } from "../apis/tmdb";
 import useResize from "../hooks/useResize";
 import Thumbnail from "./Thumbnail/Index";
 
 interface SliderProps {
-  movies: ITmdbMovieResult[] | ITmdbShowResult[];
+  allMedia: ITmdbMovieResult[] | ITmdbShowResult[];
   sliderTitle: string;
 }
 
@@ -58,7 +58,10 @@ const NextButton = styled(NavButton)`
   z-index: 2;
 `;
 
-export default function Slider({ movies, sliderTitle }: SliderProps) {
+export default function Slider({
+  allMedia: allMedia,
+  sliderTitle,
+}: SliderProps) {
   const navigate = useNavigate();
   const { width } = useResize();
 
@@ -67,7 +70,7 @@ export default function Slider({ movies, sliderTitle }: SliderProps) {
   const [leaving, setLeaving] = useState(false);
   const [sliderDirection, setSliderDirection] = useState<1 | -1>(1);
 
-  const maxIndex = Math.ceil(movies.length / offset) - 1;
+  const maxIndex = Math.ceil(allMedia.length / offset) - 1;
 
   useEffect(() => {
     if (width > 1200) {
@@ -96,13 +99,13 @@ export default function Slider({ movies, sliderTitle }: SliderProps) {
     setLeaving((prev) => !prev);
   };
 
-  const handleMovieClick = (movie: ITmdbMovieResult | ITmdbShowResult) => {
-    if ("title" in movie) {
-      navigate(`/movies/${movie.id}`);
+  const handleThumnailClick = (media: ITmdbMovieResult | ITmdbShowResult) => {
+    if ("title" in media) {
+      navigate(`/movies/${media.id}`);
     } else {
-      navigate(`/tv/${movie.id}`);
+      navigate(`/tv/${media.id}`);
     }
-    // console.log(movie.id);
+    // console.log(media.media_type);
   };
 
   return (
@@ -120,15 +123,18 @@ export default function Slider({ movies, sliderTitle }: SliderProps) {
           exit={{ x: sliderDirection * (-window.outerWidth + gridGap) }}
           transition={{ type: "tween" }}
         >
-          {movies
+          {allMedia
             .slice(offset * index, offset * index + offset)
-            .map((movie, i) => (
+            .map((media, i) => (
               <Thumbnail
+                mediaId={media.id}
+                mediaTitle={"title" in media ? media.title : media.name}
+                mediaType={"title" in media ? "movie" : "tv"}
                 key={i}
                 onMovieClick={() => {
-                  handleMovieClick(movie);
+                  handleThumnailClick(media);
                 }}
-                movie={movie}
+                bgPhoto={makeImagePath(media.backdrop_path, "w400")}
               ></Thumbnail>
             ))}
         </Row>

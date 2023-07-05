@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
+import YouTube from "react-youtube";
 
 import { Overlay } from "./UI/Overlay";
 import Loader from "./UI/Loader";
@@ -11,8 +12,10 @@ import {
   ITmdbDetail,
   ITmdbMovieDetail,
   ITmdbShowDetail,
+  IVideo,
   fetchDetailMovie,
   fetchDetailShow,
+  fetchMovieTrailer,
   makeImagePath,
 } from "../apis/tmdb";
 
@@ -23,7 +26,7 @@ interface IProps {
 
 const Container = styled(motion.div)`
   position: absolute;
-  width: 500px;
+  width: 640px;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -33,30 +36,27 @@ const Container = styled(motion.div)`
   color: ${(props) => props.theme.white.lighter};
 `;
 
-const Image = styled(motion.div)<{ imgSrc: string }>`
-  width: 100%;
-  height: 281.25px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.5)),
-    url(${(props) => props.imgSrc});
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-`;
-const Video = styled.iframe`
-  width: 100%;
-  height: 281.25px;
-`;
-const Title = styled.h2`
-  position: relative;
+// const Image = styled(motion.div)<{ imgSrc: string }>`
+//   width: 100%;
+//   height: 281.25px; // 가로 500px일 때 비율에 맞춤
+//   background-image: linear-gradient(rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.5)),
+//     url(${(props) => props.imgSrc});
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   background-position: center center;
+// `;
 
-  padding: 20px;
-  font-size: 31px;
-  top: -90px;
-`;
+// const Title = styled.h2`
+//   position: relative;
+
+//   padding: 20px;
+//   font-size: 31px;
+//   /* top: -90px; */
+// `;
 const Overview = styled.div`
   position: relative;
   padding: 20px;
-  top: -45px;
+  /* top: -45px; */
 `;
 
 export default function DetailModal({ mediaId, mediaType }: IProps) {
@@ -68,7 +68,11 @@ export default function DetailModal({ mediaId, mediaType }: IProps) {
       ? fetchDetailMovie.bind(null, +mediaId)
       : fetchDetailShow.bind(null, mediaId)
   );
-  console.log(data);
+  const { data: trailerData } = useQuery<IVideo>(
+    ["movies", "trailer"],
+    fetchMovieTrailer.bind(null, mediaId)
+  );
+  // console.log(trailerData?.key);
 
   const hideOverlay = () => {
     mediaType === "movie" ? navigate("/") : navigate("/tv");
@@ -88,12 +92,24 @@ export default function DetailModal({ mediaId, mediaType }: IProps) {
         <Overlay hideOverlay={hideOverlay}>
           <AnimatePresence>
             <Container layoutId={mediaId}>
-              <Image imgSrc={makeImagePath(data.backdrop_path, "w500")}></Image>
-              <Title>
+              <YouTube
+                videoId={trailerData?.key}
+                opts={{
+                  width: "640",
+                  height: "390",
+                  playerVars: {
+                    autoplay: 1,
+                    rel: 0,
+                    modestbranding: 1,
+                  },
+                }}
+              ></YouTube>
+              {/* <Image imgSrc={makeImagePath(data.backdrop_path, "w500")}></Image> */}
+              {/* <Title>
                 {mediaType === "movie"
                   ? (data as ITmdbMovieDetail).title
                   : (data as ITmdbShowDetail).name}
-              </Title>
+              </Title> */}
 
               <Overview>{data.overview}</Overview>
             </Container>

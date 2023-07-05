@@ -1,16 +1,15 @@
-import {
-  ITmdbMovieResult,
-  ITmdbShowResult,
-  makeImagePath,
-} from "../../apis/tmdb";
+import { ITmdbMovieResult, ITmdbShowResult } from "../../apis/tmdb";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 
 import ThumbnailInfo from "./ThumbnailInfo";
 
 interface IProps {
-  movie: ITmdbMovieResult | ITmdbShowResult;
   onMovieClick: (id: number) => void;
+  mediaType: string;
+  mediaId: number;
+  mediaTitle: string;
+  bgPhoto: string;
 }
 
 const Container = styled(motion.div)<{ bgPhoto: string }>`
@@ -45,24 +44,27 @@ const containerVariants = {
     },
   },
 };
-
-export default function Thumbnail({ movie, onMovieClick }: IProps) {
+export default function Thumbnail({
+  onMovieClick,
+  mediaId,
+  mediaTitle,
+  mediaType,
+  bgPhoto,
+}: IProps) {
   return (
     <AnimatePresence>
       <Container
-        layoutId={"" + movie.id}
-        key={movie.id}
+        layoutId={mediaType + mediaId}
+        key={mediaId}
         variants={containerVariants}
         onClick={() => {
-          onMovieClick(movie.id);
+          onMovieClick(mediaId);
         }}
         whileHover="hover"
-        bgPhoto={makeImagePath(movie.backdrop_path, "w400")}
+        bgPhoto={bgPhoto}
         transition={{ type: "tween" }}
       >
-        <ThumbnailInfo
-          title={"name" in movie ? movie.name : movie.title}
-        ></ThumbnailInfo>
+        <ThumbnailInfo title={mediaTitle}></ThumbnailInfo>
       </Container>
     </AnimatePresence>
   );

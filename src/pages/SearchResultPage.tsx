@@ -94,7 +94,10 @@ export default function SearchPage() {
             onMovieClick={() => {
               return;
             }}
-            movie={movie}
+            mediaId={movie.id}
+            mediaTitle={movie.title}
+            mediaType={"title" in movie ? "movie" : "tv"}
+            bgPhoto={makeImagePath(movie.backdrop_path, "w400")}
           ></Thumbnail>
         ))}
       </Row>
@@ -108,7 +111,10 @@ export default function SearchPage() {
             onMovieClick={() => {
               return;
             }}
-            movie={show}
+            mediaId={show.id}
+            mediaTitle={show.name}
+            mediaType={"tv"}
+            bgPhoto={makeImagePath(show.backdrop_path, "w400")}
           ></Thumbnail>
         ))}
       </Row>
