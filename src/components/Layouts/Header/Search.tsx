@@ -81,8 +81,8 @@ export default function Search() {
           minLength: 2,
         })}
         initial={{ scaleX: 0 }}
-        value={"spider man"}
-        placeholder="'Spider man'을 검색해보세요."
+        // value={"spider man"}
+        placeholder="제목을 검색해주세요."
         animate={{ scaleX: isSearchOpen ? 1 : 0 }}
       ></SearchInput>
     </Container>
