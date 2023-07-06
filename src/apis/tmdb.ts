@@ -82,7 +82,7 @@ export function fetchDetailMovie(id: number | string) {
   return fetchFromApi(`movie/${id}?language=ko-KR`);
 }
 
-export function fetchDetailShow(id: number | string) {
+export function fetchDetailTV(id: number | string) {
   return fetchFromApi(`tv/${id}?language=ko-KR`);
 }
 export function fetchMultiSearch(query: string) {
@@ -91,7 +91,7 @@ export function fetchMultiSearch(query: string) {
   );
 }
 
-export function fetchTrendingShow() {
+export function fetchTrendingTV() {
   return fetchFromApi("trending/tv/day?language=ko-KR");
 }
 
@@ -124,7 +124,7 @@ export interface BelongsToCollection {
   backdrop_path: any;
 }
 
-export interface ITmdbShowDetail {
+export interface ITmdbTVDetail {
   adult: boolean;
   backdrop_path: string;
   first_air_date: string;
@@ -168,7 +168,7 @@ export interface Season {
   vote_average: number;
 }
 
-export type ITmdbDetail = ITmdbMovieDetail | ITmdbShowDetail;
+export type ITmdbDetail = ITmdbMovieDetail | ITmdbTVDetail;
 
 export interface IVideo {
   iso_639_1: string;
@@ -182,7 +182,9 @@ export interface IVideo {
   published_at: string;
   id: string;
 }
-export async function fetchMovieTrailer(id: number | string) {
+export async function fetchMovieTrailer(
+  id: number | string,
+) {
   const json = await fetchFromApi(`movie/${id}/videos?language=ko-KR`);
   return json.results.filter((item: IVideo) => item.type === "Trailer")[0];
 }

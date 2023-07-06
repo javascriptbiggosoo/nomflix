@@ -11,10 +11,10 @@ import Loader from "./UI/Loader";
 import {
   ITmdbDetail,
   ITmdbMovieDetail,
-  ITmdbShowDetail,
+  ITmdbTVDetail,
   IVideo,
   fetchDetailMovie,
-  fetchDetailShow,
+  fetchDetailTV,
   fetchMovieTrailer,
   makeImagePath,
 } from "../apis/tmdb";
@@ -36,23 +36,23 @@ const Container = styled(motion.div)`
   color: ${(props) => props.theme.white.lighter};
 `;
 
-// const Image = styled(motion.div)<{ imgSrc: string }>`
-//   width: 100%;
-//   height: 281.25px; // 가로 500px일 때 비율에 맞춤
-//   background-image: linear-gradient(rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.5)),
-//     url(${(props) => props.imgSrc});
-//   background-size: cover;
-//   background-repeat: no-repeat;
-//   background-position: center center;
-// `;
+const Image = styled(motion.div)<{ imgSrc: string }>`
+  width: 100%;
+  height: 360px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.5)),
+    url(${(props) => props.imgSrc});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+`;
 
-// const Title = styled.h2`
-//   position: relative;
+const Title = styled.h2`
+  position: relative;
 
-//   padding: 20px;
-//   font-size: 31px;
-//   /* top: -90px; */
-// `;
+  padding: 20px;
+  font-size: 31px;
+  /* top: -90px; */
+`;
 const Overview = styled.div`
   position: relative;
   padding: 20px;
@@ -66,13 +66,12 @@ export default function DetailModal({ mediaId, mediaType }: IProps) {
     ["movies", "detail"],
     mediaType === "movie"
       ? fetchDetailMovie.bind(null, +mediaId)
-      : fetchDetailShow.bind(null, mediaId)
+      : fetchDetailTV.bind(null, mediaId)
   );
   const { data: trailerData } = useQuery<IVideo>(
-    ["movies", "trailer"],
+    ["media", "trailer"],
     fetchMovieTrailer.bind(null, mediaId)
   );
-  // console.log(trailerData?.key);
 
   const hideOverlay = () => {
     mediaType === "movie" ? navigate("/") : navigate("/tv");
@@ -92,24 +91,27 @@ export default function DetailModal({ mediaId, mediaType }: IProps) {
         <Overlay hideOverlay={hideOverlay}>
           <AnimatePresence>
             <Container layoutId={mediaId}>
-              <YouTube
-                videoId={trailerData?.key}
-                opts={{
-                  width: "640",
-                  height: "390",
-                  playerVars: {
-                    autoplay: 1,
-                    rel: 0,
-                    modestbranding: 1,
-                  },
-                }}
-              ></YouTube>
-              {/* <Image imgSrc={makeImagePath(data.backdrop_path, "w500")}></Image> */}
-              {/* <Title>
-                {mediaType === "movie"
-                  ? (data as ITmdbMovieDetail).title
-                  : (data as ITmdbShowDetail).name}
-              </Title> */}
+              {mediaType === "movie" ? (
+                <YouTube
+                  videoId={trailerData?.key}
+                  opts={{
+                    width: "640",
+                    height: "390",
+                    playerVars: {
+                      autoplay: 1,
+                      rel: 0,
+                      modestbranding: 1,
+                    },
+                  }}
+                ></YouTube>
+              ) : (
+                <>
+                  <Image
+                    imgSrc={makeImagePath(data.backdrop_path, "w500")}
+                  ></Image>
+                  <Title>{(data as ITmdbTVDetail).name}</Title>
+                </>
+              )}
 
               <Overview>{data.overview}</Overview>
             </Container>

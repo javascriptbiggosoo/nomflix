@@ -105,7 +105,7 @@ export default function Slider({
     } else {
       navigate(`/tv/${media.id}`);
     }
-    // console.log(media.media_type);
+    console.log(media);
   };
 
   return (

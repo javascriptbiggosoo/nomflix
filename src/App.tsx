@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage";
 import TVPage from "./pages/TVPage";
 import SearchPage from "./pages/SearchResultPage";
 import RootLayout from "./pages/RootLayout";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const router = createBrowserRouter(
   [
@@ -22,7 +23,12 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <ReactQueryDevtools></ReactQueryDevtools>
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
 export default App;

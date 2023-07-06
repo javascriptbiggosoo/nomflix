@@ -8,13 +8,7 @@ import Loader from "../components/UI/Loader";
 import Banner from "../components/Banner";
 import Error from "../components/UI/Error";
 
-import {
-  ITmdbMovie,
-  ITmdbShow,
-  fetchNowPlayingMovie,
-  fetchTrendingShow,
-  fetchUpcomingMovie,
-} from "../apis/tmdb";
+import { ITmdbShow, fetchTrendingTV, fetchUpcomingMovie } from "../apis/tmdb";
 
 const Container = styled.main``;
 
@@ -23,7 +17,7 @@ export default function TVPage() {
     isLoading: isLoadingTrending,
     data: trendingData,
     isError: isErrorTrending,
-  } = useQuery<ITmdbShow>(["shows", "trending"], fetchTrendingShow);
+  } = useQuery<ITmdbShow>(["tv", "trending"], fetchTrendingTV);
   const movieDetailPage = useMatch("/tv/:showId");
 
   // const {
@@ -35,9 +29,9 @@ export default function TVPage() {
   // const isLoading = isLoadingNowPlaying || isLoadingUpcoming;
   // const isError = isErrorNowPlaying || isErrorUpcoming;
 
-  // if (isLoading) return <Loader />;
+  if (isLoadingTrending) return <Loader />;
 
-  // if (isError) return <Error />;
+  if (isErrorTrending) return <Error />;
 
   return (
     <Container>
