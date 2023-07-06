@@ -274,7 +274,7 @@ Error generating stack: `+i.message+`
   z-index: 1;
 `,R3=Me(Jn.svg)`
   cursor: pointer;
-`;function x3(){const{register:e,handleSubmit:t,setFocus:n,watch:r}=g3(),[o,i]=P.useState(!1),s=Pi();P.useEffect(()=>{o&&n("keyword")},[o]);const a=()=>{i(!0)},l=u=>{console.log(u),s(`/search?keyword=${u.keyword}`)};return q.jsxs(S3,{onSubmit:t(l),children:[q.jsx(R3,{animate:{x:o?-245:0},fill:"currentColor",viewBox:"0 0 20 20",xmlns:"http://www.w3.org/2000/svg",onClick:a,children:q.jsx("path",{fillRule:"evenodd",d:"M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z",clipRule:"evenodd"})}),q.jsx(w3,{...e("keyword",{required:!0,onBlur:()=>{i(!1)},minLength:2}),initial:{scaleX:0},value:"spider man",placeholder:"'Spider man'을 검색해보세요.",animate:{scaleX:o?1:0}})]})}const E3=Me.header`
+`;function x3(){const{register:e,handleSubmit:t,setFocus:n,watch:r}=g3(),[o,i]=P.useState(!1),s=Pi();P.useEffect(()=>{o&&n("keyword")},[o]);const a=()=>{i(!0)},l=u=>{console.log(u),s(`/search?keyword=${u.keyword}`)};return q.jsxs(S3,{onSubmit:t(l),children:[q.jsx(R3,{animate:{x:o?-245:0},fill:"currentColor",viewBox:"0 0 20 20",xmlns:"http://www.w3.org/2000/svg",onClick:a,children:q.jsx("path",{fillRule:"evenodd",d:"M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z",clipRule:"evenodd"})}),q.jsx(w3,{...e("keyword",{required:!0,onBlur:()=>{i(!1)},minLength:2}),initial:{scaleX:0},placeholder:"제목을 검색해주세요.",animate:{scaleX:o?1:0}})]})}const E3=Me.header`
   position: fixed;
   top: 0;
   color: ${e=>e.theme.white.lighter};
