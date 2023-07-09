@@ -88,9 +88,9 @@ export default function SearchPage() {
       <SectionTitle>Movies</SectionTitle>
 
       <Row offset={offset}>
-        {movies.map((movie: ITmdbMovieResult, idx: number) => (
+        {movies.map((movie: ITmdbMovieResult) => (
           <Thumbnail
-            key={idx}
+            key={movie.id}
             onMovieClick={() => {
               return;
             }}

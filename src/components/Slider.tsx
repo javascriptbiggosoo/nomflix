@@ -125,12 +125,12 @@ export default function Slider({
         >
           {allMedia
             .slice(offset * index, offset * index + offset)
-            .map((media, i) => (
+            .map((media) => (
               <Thumbnail
                 mediaId={media.id}
                 mediaTitle={"title" in media ? media.title : media.name}
                 mediaType={"title" in media ? "movie" : "tv"}
-                key={i}
+                key={media.id}
                 onMovieClick={() => {
                   handleThumnailClick(media);
                 }}
