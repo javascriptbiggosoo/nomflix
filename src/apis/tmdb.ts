@@ -27,32 +27,6 @@ export interface ITmdbMovieResult {
   media_type: "movie";
 }
 
-export interface ITmdbShow {
-  page: number;
-  results: ITmdbShowResult[];
-  total_pages: number;
-  total_results: number;
-}
-
-export interface ITmdbShowResult {
-  backdrop_path: string;
-  id: number;
-  name: string;
-  original_language: string;
-  original_name: string;
-  overview: string;
-  poster_path: string;
-  media_type: string;
-  genre_ids: number[];
-  popularity: number;
-  first_air_date: string;
-  vote_average: number;
-  vote_count: number;
-  origin_country: string[];
-}
-
-export type ITmdbResult = ITmdbMovieResult | ITmdbShowResult;
-
 export function makeImagePath(id: string, format?: string) {
   return `https://image.tmdb.org/t/p/${format ? format : "original"}/${id}`;
 }
@@ -82,17 +56,10 @@ export function fetchDetailMovie(id: number | string) {
   return fetchFromApi(`movie/${id}?language=ko-KR`);
 }
 
-export function fetchDetailTV(id: number | string) {
-  return fetchFromApi(`tv/${id}?language=ko-KR`);
-}
 export function fetchMultiSearch(query: string) {
   return fetchFromApi(
     `search/multi?language=ko-KR&page=1&region=kr&query=${query}`
   );
-}
-
-export function fetchTrendingTV() {
-  return fetchFromApi("trending/tv/day?language=ko-KR");
 }
 
 export interface ITmdbMovieDetail {
@@ -124,51 +91,10 @@ export interface BelongsToCollection {
   backdrop_path: any;
 }
 
-export interface ITmdbTVDetail {
-  adult: boolean;
-  backdrop_path: string;
-  first_air_date: string;
-  genres: Genre[];
-  homepage: string;
-  id: number;
-  in_production: boolean;
-  languages: string[];
-  last_air_date: string;
-  name: string;
-  next_episode_to_air: any;
-  number_of_episodes: number;
-  number_of_seasons: number;
-  origin_country: string[];
-  original_language: string;
-  original_name: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  seasons: Season[];
-  status: string;
-  tagline: string;
-  type: string;
-  vote_average: number;
-  vote_count: number;
-}
-
 export interface Genre {
   id: number;
   name: string;
 }
-
-export interface Season {
-  air_date: string;
-  episode_count: number;
-  id: number;
-  name: string;
-  overview: string;
-  poster_path: string;
-  season_number: number;
-  vote_average: number;
-}
-
-export type ITmdbDetail = ITmdbMovieDetail | ITmdbTVDetail;
 
 export interface IVideo {
   iso_639_1: string;
@@ -182,9 +108,8 @@ export interface IVideo {
   published_at: string;
   id: string;
 }
-export async function fetchMovieTrailer(
-  id: number | string,
-) {
+
+export async function fetchMovieTrailer(id: number | string) {
   const json = await fetchFromApi(`movie/${id}/videos?language=ko-KR`);
   return json.results.filter((item: IVideo) => item.type === "Trailer")[0];
 }

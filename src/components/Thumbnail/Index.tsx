@@ -1,4 +1,3 @@
-import { ITmdbMovieResult, ITmdbShowResult } from "../../apis/tmdb";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -6,7 +5,6 @@ import ThumbnailInfo from "./ThumbnailInfo";
 
 interface IProps {
   onMovieClick: (id: number) => void;
-  mediaType: string;
   mediaId: number;
   mediaTitle: string;
   bgPhoto: string;
@@ -48,13 +46,12 @@ export default function Thumbnail({
   onMovieClick,
   mediaId,
   mediaTitle,
-  mediaType,
   bgPhoto,
 }: IProps) {
   return (
     <AnimatePresence>
       <Container
-        layoutId={mediaType + mediaId}
+        layoutId={''+mediaId}
         key={mediaId}
         variants={containerVariants}
         onClick={() => {

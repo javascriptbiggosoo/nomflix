@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { ITmdbMovieResult, ITmdbShowResult, makeImagePath } from "../apis/tmdb";
+import { ITmdbMovieResult, makeImagePath } from "../apis/tmdb";
 
 interface Props {
-  bannerMovie: ITmdbMovieResult | ITmdbShowResult;
+  bannerMovie: ITmdbMovieResult;
 }
 
 const Container = styled.section<{ bgPhoto: string }>`
@@ -28,9 +28,7 @@ const OverView = styled.p`
 export default function Banner({ bannerMovie }: Props) {
   return (
     <Container bgPhoto={bannerMovie.backdrop_path}>
-      <Title>
-        {"name" in bannerMovie ? bannerMovie.name : bannerMovie.title}
-      </Title>
+      <Title>{bannerMovie.title}</Title>
       <OverView>{bannerMovie.overview}</OverView>
     </Container>
   );

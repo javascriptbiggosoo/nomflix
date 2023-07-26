@@ -3,12 +3,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-import { ITmdbMovieResult, ITmdbShowResult, makeImagePath } from "../apis/tmdb";
+import { ITmdbMovieResult, makeImagePath } from "../apis/tmdb";
 import useResize from "../hooks/useResize";
 import Thumbnail from "./Thumbnail/Index";
 
 interface SliderProps {
-  allMedia: ITmdbMovieResult[] | ITmdbShowResult[];
+  allMedia: ITmdbMovieResult[];
   sliderTitle: string;
 }
 
@@ -99,12 +99,9 @@ export default function Slider({
     setLeaving((prev) => !prev);
   };
 
-  const handleThumnailClick = (media: ITmdbMovieResult | ITmdbShowResult) => {
-    if ("title" in media) {
-      navigate(`/movies/${media.id}`);
-    } else {
-      navigate(`/tv/${media.id}`);
-    }
+  const handleThumnailClick = (media: ITmdbMovieResult) => {
+    navigate(`/movies/${media.id}`);
+
     console.log(media);
   };
 
@@ -128,8 +125,7 @@ export default function Slider({
             .map((media) => (
               <Thumbnail
                 mediaId={media.id}
-                mediaTitle={"title" in media ? media.title : media.name}
-                mediaType={"title" in media ? "movie" : "tv"}
+                mediaTitle={media.title}
                 key={media.id}
                 onMovieClick={() => {
                   handleThumnailClick(media);

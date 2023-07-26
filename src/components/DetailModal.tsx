@@ -9,19 +9,14 @@ import { Overlay } from "./UI/Overlay";
 import Loader from "./UI/Loader";
 
 import {
-  ITmdbDetail,
   ITmdbMovieDetail,
-  ITmdbTVDetail,
   IVideo,
   fetchDetailMovie,
-  fetchDetailTV,
   fetchMovieTrailer,
-  makeImagePath,
 } from "../apis/tmdb";
 
 interface IProps {
   mediaId: string;
-  mediaType: "tv" | "movie";
 }
 
 const Container = styled(motion.div)`
@@ -59,14 +54,12 @@ const Overview = styled.div`
   /* top: -45px; */
 `;
 
-export default function DetailModal({ mediaId, mediaType }: IProps) {
+export default function DetailModal({ mediaId }: IProps) {
   const navigate = useNavigate();
 
-  const { data, isLoading } = useQuery<ITmdbDetail>(
+  const { data, isLoading } = useQuery<ITmdbMovieDetail>(
     ["movies", "detail"],
-    mediaType === "movie"
-      ? fetchDetailMovie.bind(null, +mediaId)
-      : fetchDetailTV.bind(null, mediaId)
+    fetchDetailMovie.bind(null, +mediaId)
   );
   const { data: trailerData } = useQuery<IVideo>(
     ["media", "trailer"],
@@ -74,7 +67,7 @@ export default function DetailModal({ mediaId, mediaType }: IProps) {
   );
 
   const hideOverlay = () => {
-    mediaType === "movie" ? navigate("/") : navigate("/tv");
+    navigate(-1);
   };
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -91,27 +84,18 @@ export default function DetailModal({ mediaId, mediaType }: IProps) {
         <Overlay hideOverlay={hideOverlay}>
           <AnimatePresence>
             <Container layoutId={mediaId}>
-              {mediaType === "movie" ? (
-                <YouTube
-                  videoId={trailerData?.key}
-                  opts={{
-                    width: "640",
-                    height: "390",
-                    playerVars: {
-                      autoplay: 1,
-                      rel: 0,
-                      modestbranding: 1,
-                    },
-                  }}
-                ></YouTube>
-              ) : (
-                <>
-                  <Image
-                    imgSrc={makeImagePath(data.backdrop_path, "w500")}
-                  ></Image>
-                  <Title>{(data as ITmdbTVDetail).name}</Title>
-                </>
-              )}
+              <YouTube
+                videoId={trailerData?.key}
+                opts={{
+                  width: "640",
+                  height: "390",
+                  playerVars: {
+                    autoplay: 1,
+                    rel: 0,
+                    modestbranding: 1,
+                  },
+                }}
+              ></YouTube>
 
               <Overview>{data.overview}</Overview>
             </Container>

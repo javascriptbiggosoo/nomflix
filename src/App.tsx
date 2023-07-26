@@ -1,6 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import TvPage from "./pages/TvPage";
 import SearchPage from "./pages/SearchResultPage";
 import RootLayout from "./pages/RootLayout";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -20,8 +19,6 @@ const router = createBrowserRouter(
       children: [
         { path: "/", element: <HomePage /> },
         { path: "/movies/:movieId", element: <HomePage /> },
-        { path: "/tv", element: <TvPage /> },
-        { path: "/tv/:showId", element: <TvPage /> },
         { path: "/search", element: <SearchPage /> },
         { path: "/login", element: <AuthPage /> },
         { path: "/profile", element: <ProfilePage /> },

@@ -1,8 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import {
   ITmdbMovieResult,
-  ITmdbResult,
-  ITmdbShowResult,
   fetchMultiSearch,
   makeImagePath,
 } from "../apis/tmdb";
@@ -67,12 +65,8 @@ export default function SearchPage() {
   }
 
   const movies = data.results.filter(
-    (result: ITmdbResult) =>
+    (result: ITmdbMovieResult) =>
       result.media_type === "movie" && result.backdrop_path
-  );
-
-  const tvShows = data.results.filter(
-    (result: ITmdbResult) => result.media_type === "tv" && result.backdrop_path
   );
 
   return (
@@ -81,7 +75,6 @@ export default function SearchPage() {
         "<strong style={{ fontWeight: "bold" }}>{keyword}</strong>"의
         검색결과입니다.
       </MainTitle>
-      <SectionTitle>Movies</SectionTitle>
 
       <Row offset={offset}>
         {movies.map((movie: ITmdbMovieResult) => (
@@ -92,25 +85,7 @@ export default function SearchPage() {
             }}
             mediaId={movie.id}
             mediaTitle={movie.title}
-            mediaType={"title" in movie ? "movie" : "tv"}
             bgPhoto={makeImagePath(movie.backdrop_path, "w400")}
-          ></Thumbnail>
-        ))}
-      </Row>
-
-      <SectionTitle>TV Shows</SectionTitle>
-
-      <Row offset={offset}>
-        {tvShows.map((show: ITmdbShowResult, idx: number) => (
-          <Thumbnail
-            key={idx}
-            onMovieClick={() => {
-              return;
-            }}
-            mediaId={show.id}
-            mediaTitle={show.name}
-            mediaType={"tv"}
-            bgPhoto={makeImagePath(show.backdrop_path, "w400")}
           ></Thumbnail>
         ))}
       </Row>

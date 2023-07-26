@@ -24,7 +24,7 @@ export default function HomePage() {
     data: nowPlayingData,
     isError: isErrorNowPlaying,
   } = useQuery<ITmdbMovie>(["movies", "nowPlaying"], fetchNowPlayingMovie);
-  const movieDetailPage = useMatch("/movies/:movieId");
+  const isMovieDetailPage = useMatch("/movies/:movieId");
   // console.log(movieDetailPage);
 
   const {
@@ -54,10 +54,9 @@ export default function HomePage() {
             allMedia={upcomingData.results.slice(1, 19)}
           />
 
-          {movieDetailPage?.params.movieId && (
+          {isMovieDetailPage?.params.movieId && (
             <DetailModal
-              mediaType="movie"
-              mediaId={movieDetailPage.params.movieId}
+              mediaId={isMovieDetailPage.params.movieId}
             ></DetailModal>
           )}
         </>

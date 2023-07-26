@@ -91,11 +91,7 @@ export default function Header() {
                 영화
               </Link>
             </Item>
-            <Item>
-              <Link to="/tv" style={{ fontWeight: TvPage ? "bold" : "normal" }}>
-                TV 프로그램
-              </Link>
-            </Item>
+
             <Item>
               {isLoggedIn ? (
                 <Link
