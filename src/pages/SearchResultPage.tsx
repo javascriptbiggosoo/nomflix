@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import {
   ITmdbMovieResult,
   ITmdbResult,
@@ -18,10 +18,7 @@ const Container = styled.main`
   top: 70px;
 
   position: relative;
-  margin: 0 auto;
-  margin: auto;
   margin: 0px 20px;
-  /* z-index: -1; */
 `;
 const MainTitle = styled.h1`
   font-size: 48px;
@@ -46,7 +43,6 @@ export default function SearchPage() {
   const [offset, setOffset] = useState(6);
   const [searchParams] = useSearchParams();
   const { width } = useResize();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (width > 1200) {

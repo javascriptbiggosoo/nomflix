@@ -8,17 +8,20 @@ import {
 } from "framer-motion";
 
 import Search from "./Search";
+import { useRecoilValue } from "recoil";
+import { isLoggedInState } from "../../../atoms";
 
 const Container = styled.header`
   position: fixed;
+  align-items: center;
+  width: 100vw;
   top: 0;
   color: ${(props) => props.theme.white.lighter};
+  z-index: 999;
 `;
 const Nav = styled(motion.nav)`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  width: 100vw;
   padding: 20px 60px;
 `;
 const Col = styled.div`
@@ -54,9 +57,14 @@ const NavVariants = {
 export default function Header() {
   const { scrollY } = useScroll();
   const navAnimation = useAnimation();
-  // console.log("Page scroll: ", scrollY);
+  const HomePage = useMatch("/");
+  const TvPage = useMatch("/tv");
+  const AuthPage = useMatch("/login");
+  const ProfilePage = useMatch("/profile");
+  const isLoggedIn = useRecoilValue(isLoggedInState);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
+    // console.log("Page scroll: ", scrollY);
     if (latest > 0) {
       navAnimation.start(NavVariants.scroll);
     } else {
@@ -64,9 +72,6 @@ export default function Header() {
     }
     // console.log("Page scroll: ", latest);
   });
-
-  const HomePage = useMatch("/");
-  const TVPage = useMatch("/tv");
 
   return (
     <Container>
@@ -87,9 +92,26 @@ export default function Header() {
               </Link>
             </Item>
             <Item>
-              <Link to="/tv" style={{ fontWeight: TVPage ? "bold" : "normal" }}>
+              <Link to="/tv" style={{ fontWeight: TvPage ? "bold" : "normal" }}>
                 TV 프로그램
               </Link>
+            </Item>
+            <Item>
+              {isLoggedIn ? (
+                <Link
+                  to="/profile"
+                  style={{ fontWeight: ProfilePage ? "bold" : "normal" }}
+                >
+                  내 프로필
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  style={{ fontWeight: AuthPage ? "bold" : "normal" }}
+                >
+                  로그인
+                </Link>
+              )}
             </Item>
           </Items>
         </Col>

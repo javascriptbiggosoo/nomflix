@@ -1,4 +1,5 @@
 import { DefaultTheme } from "styled-components";
+import colors from "./constants/colors";
 
 export const theme: DefaultTheme = {
   red: "#E51013",
@@ -8,7 +9,7 @@ export const theme: DefaultTheme = {
     lighter: "#2F2F2F",
   },
   white: {
-    lighter: "#fff",
+    lighter: colors.white,
     darker: "#e5e5e5",
   },
 };

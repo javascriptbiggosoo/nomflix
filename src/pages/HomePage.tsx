@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { useMatch } from "react-router-dom";
 
-import Slider from "../components/Slider";
+import Slider from "../components/MediaSlider";
 import DetailModal from "../components/DetailModal";
 import Loader from "../components/UI/Loader";
 import Banner from "../components/Banner";
@@ -14,7 +14,9 @@ import {
   fetchUpcomingMovie,
 } from "../apis/tmdb";
 
-const Container = styled.main``;
+const Container = styled.main`
+  /* position: relative; */
+`;
 
 export default function HomePage() {
   const {
