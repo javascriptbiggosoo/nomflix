@@ -62,6 +62,12 @@ export function fetchMultiSearch(query: string) {
   );
 }
 
+interface ProductionCompanies {
+  id: number;
+  logo_path?: string;
+  name: string;
+  origin_country: string;
+}
 export interface ITmdbMovieDetail {
   backdrop_path: string;
   belongs_to_collection: BelongsToCollection;
@@ -74,6 +80,7 @@ export interface ITmdbMovieDetail {
   overview: string;
   popularity: number;
   poster_path: string;
+  production_companies: ProductionCompanies;
   release_date: string;
   revenue: number;
   status: string;
@@ -84,14 +91,14 @@ export interface ITmdbMovieDetail {
   vote_count: number;
 }
 
-export interface BelongsToCollection {
+interface BelongsToCollection {
   id: number;
   name: string;
   poster_path: any;
   backdrop_path: any;
 }
 
-export interface Genre {
+interface Genre {
   id: number;
   name: string;
 }

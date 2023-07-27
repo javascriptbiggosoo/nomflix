@@ -102,7 +102,7 @@ export default function Slider({
   const handleThumnailClick = (media: ITmdbMovieResult) => {
     navigate(`/movies/${media.id}`);
 
-    console.log(media);
+    // console.log(media);
   };
 
   return (
@@ -124,13 +124,13 @@ export default function Slider({
             .slice(offset * index, offset * index + offset)
             .map((media) => (
               <Thumbnail
-                mediaId={media.id}
-                mediaTitle={media.title}
+                movieId={media.id}
+                movieTitle={media.title}
                 key={media.id}
                 onMovieClick={() => {
                   handleThumnailClick(media);
                 }}
-                bgPhoto={makeImagePath(media.backdrop_path, "w400")}
+                movieBackdropPath={makeImagePath(media.backdrop_path, "w400")}
               ></Thumbnail>
             ))}
         </Row>

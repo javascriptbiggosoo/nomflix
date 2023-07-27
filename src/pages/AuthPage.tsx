@@ -1,7 +1,7 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import React from "react";
 import styled from "styled-components";
-import { authService } from "../fbase";
+import { authService, dbService } from "../fbase";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.main`
@@ -23,6 +23,7 @@ export default function AuthPage() {
       const result = await signInWithPopup(authService, provider);
       console.log(result);
       const user = result.user;
+
       navigate("/");
     };
     loginWithGoogle();

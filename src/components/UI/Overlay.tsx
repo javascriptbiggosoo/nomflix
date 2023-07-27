@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import  { ReactNode } from "react";
+import { ReactNode } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 
@@ -19,7 +19,7 @@ const Container = styled(motion.div)`
 
 interface OverlayProps {
   children: ReactNode;
-  hideOverlay: () => void;
+  hideOverlay: (ev: React.MouseEvent<HTMLDivElement>) => void;
 }
 export const Overlay = ({ children, hideOverlay }: OverlayProps) => {
   return createPortal(

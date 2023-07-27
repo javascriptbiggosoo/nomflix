@@ -8,9 +8,8 @@ import { useQuery } from "@tanstack/react-query";
 import Loader from "../components/UI/Loader";
 import Error from "../components/UI/Error";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
-import useResize from "../hooks/useResize";
 import Thumbnail from "../components/Thumbnail/Index";
+import MovieRow from "../components/MovieContainer";
 
 const Container = styled.main`
   top: 70px;
@@ -28,27 +27,9 @@ const SectionTitle = styled.h3`
 
   margin-bottom: 20px;
 `;
-const gridGap = 5;
-const Row = styled.div<{ offset: number }>`
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(${(props) => props.offset}, 1fr);
-  grid-gap: ${gridGap}px;
-  margin-bottom: 40px;
-`;
 
 export default function SearchPage() {
-  const [offset, setOffset] = useState(6);
   const [searchParams] = useSearchParams();
-  const { width } = useResize();
-
-  useEffect(() => {
-    if (width > 1200) {
-      setOffset(6);
-    } else if (width > 800) {
-      setOffset(3);
-    }
-  }, [width]);
 
   const keyword = searchParams.get("keyword");
   const { data, isLoading, isError } = useQuery(
@@ -76,19 +57,19 @@ export default function SearchPage() {
         검색결과입니다.
       </MainTitle>
 
-      <Row offset={offset}>
+      <MovieRow>
         {movies.map((movie: ITmdbMovieResult) => (
           <Thumbnail
             key={movie.id}
             onMovieClick={() => {
               return;
             }}
-            mediaId={movie.id}
-            mediaTitle={movie.title}
-            bgPhoto={makeImagePath(movie.backdrop_path, "w400")}
+            movieId={movie.id}
+            movieTitle={movie.title}
+            movieBackdropPath={makeImagePath(movie.backdrop_path, "w400")}
           ></Thumbnail>
         ))}
-      </Row>
+      </MovieRow>
     </Container>
   );
 }

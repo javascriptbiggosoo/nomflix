@@ -6,7 +6,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import YouTube from "react-youtube";
 
 import { Overlay } from "./UI/Overlay";
-import Loader from "./UI/Loader";
 
 import {
   ITmdbMovieDetail,
@@ -16,7 +15,7 @@ import {
 } from "../apis/tmdb";
 
 interface IProps {
-  mediaId: string;
+  movieId: string;
 }
 
 const Container = styled(motion.div)`
@@ -44,32 +43,36 @@ const Image = styled(motion.div)<{ imgSrc: string }>`
 const Title = styled.h2`
   position: relative;
 
-  padding: 20px;
+  padding: 10px 20px;
   font-size: 31px;
   /* top: -90px; */
 `;
 const Overview = styled.div`
   position: relative;
-  padding: 20px;
+  padding: 10px;
   /* top: -45px; */
 `;
 
-export default function DetailModal({ mediaId }: IProps) {
+export default function TrailerModal({ movieId: mediaId }: IProps) {
   const navigate = useNavigate();
 
-  const { data, isLoading } = useQuery<ITmdbMovieDetail>(
+  const { data } = useQuery<ITmdbMovieDetail>(
     ["movies", "detail"],
     fetchDetailMovie.bind(null, +mediaId)
   );
+  console.log(data);
   const { data: trailerData } = useQuery<IVideo>(
     ["media", "trailer"],
     fetchMovieTrailer.bind(null, mediaId)
   );
 
-  const hideOverlay = () => {
-    navigate(-1);
+  const hideOverlay = (ev: React.MouseEvent<HTMLDivElement>) => {
+    if (ev.target === ev.currentTarget) {
+      navigate(-1);
+    }
   };
   useEffect(() => {
+    // 스크롤 막기
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "unset";
@@ -78,9 +81,7 @@ export default function DetailModal({ mediaId }: IProps) {
 
   return (
     <>
-      {isLoading ? (
-        <Loader />
-      ) : data ? (
+      {data ? (
         <Overlay hideOverlay={hideOverlay}>
           <AnimatePresence>
             <Container layoutId={mediaId}>
@@ -96,6 +97,7 @@ export default function DetailModal({ mediaId }: IProps) {
                   },
                 }}
               ></YouTube>
+              <Title>{data.title}</Title>
 
               <Overview>{data.overview}</Overview>
             </Container>

@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { authService } from "./fbase";
 import { useRecoilState } from "recoil";
-import { isLoggedInState } from "./atoms";
+import { currentUserState, isLoggedInState } from "./atoms";
 import ProfilePage from "./pages/ProfilePage";
 
 const router = createBrowserRouter(
@@ -30,13 +30,21 @@ const router = createBrowserRouter(
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+
   useEffect(() => {
     onAuthStateChanged(authService, (user) => {
       if (user) {
-        // 추가 작업... 뭐 setIsLoggedIn 처리를 해준다거나 하겠죠
-        const uid = user.uid;
+        const { uid, email, displayName } = user;
+
         setIsLoggedIn(true);
+        setCurrentUser({
+          uid,
+          email,
+          displayName,
+        });
       } else {
+        console.log("no user");
         setIsLoggedIn(false);
 
         // 사용자가 로그아웃한 상태

@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { useMatch } from "react-router-dom";
 
-import Slider from "../components/MediaSlider";
-import DetailModal from "../components/DetailModal";
+import Slider from "../components/MovieSlider";
+import TrailerModal from "../components/TrailerModal";
 import Loader from "../components/UI/Loader";
 import Banner from "../components/Banner";
 import Error from "../components/UI/Error";
@@ -55,9 +55,9 @@ export default function HomePage() {
           />
 
           {isMovieDetailPage?.params.movieId && (
-            <DetailModal
-              mediaId={isMovieDetailPage.params.movieId}
-            ></DetailModal>
+            <TrailerModal
+              movieId={isMovieDetailPage.params.movieId}
+            ></TrailerModal>
           )}
         </>
       )}

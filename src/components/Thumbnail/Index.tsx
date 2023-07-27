@@ -5,9 +5,9 @@ import ThumbnailInfo from "./ThumbnailInfo";
 
 interface IProps {
   onMovieClick: (id: number) => void;
-  mediaId: number;
-  mediaTitle: string;
-  bgPhoto: string;
+  movieId: number;
+  movieTitle: string;
+  movieBackdropPath: string;
 }
 
 const Container = styled(motion.div)<{ bgPhoto: string }>`
@@ -44,18 +44,18 @@ const containerVariants = {
 };
 export default function Thumbnail({
   onMovieClick,
-  mediaId,
-  mediaTitle,
-  bgPhoto,
+  movieId,
+  movieTitle: mediaTitle,
+  movieBackdropPath: bgPhoto,
 }: IProps) {
   return (
     <AnimatePresence>
       <Container
-        layoutId={''+mediaId}
-        key={mediaId}
+        layoutId={"" + movieId}
+        key={movieId}
         variants={containerVariants}
         onClick={() => {
-          onMovieClick(mediaId);
+          onMovieClick(movieId);
         }}
         whileHover="hover"
         bgPhoto={bgPhoto}
