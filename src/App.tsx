@@ -1,15 +1,19 @@
+import { Suspense, lazy, useEffect } from "react";
+
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import SearchPage from "./pages/SearchResultPage";
-import RootLayout from "./pages/RootLayout";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import AuthPage from "./pages/AuthPage";
-import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { authService } from "./fbase";
 import { useRecoilState } from "recoil";
 import { currentUserState, isLoggedInState } from "./atoms";
-import ProfilePage from "./pages/ProfilePage";
+
+import { authService } from "./fbase";
+import Loading from "./components/UI/Loader";
+
+const HomePage = lazy(() => import("./pages/HomePage"));
+const SearchPage = lazy(() => import("./pages/SearchResultPage"));
+const RootLayout = lazy(() => import("./pages/RootLayout"));
+const AuthPage = lazy(() => import("./pages/AuthPage"));
+const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 
 const router = createBrowserRouter(
   [
@@ -56,7 +60,9 @@ function App() {
   return (
     <>
       <ReactQueryDevtools></ReactQueryDevtools>
-      <RouterProvider router={router} />
+      <Suspense fallback={<Loading />}>
+        <RouterProvider router={router} />
+      </Suspense>
     </>
   );
 }
