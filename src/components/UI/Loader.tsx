@@ -1,5 +1,7 @@
 import React from "react";
+
 import styled from "styled-components";
+
 import Spinner from "../../assets/Spinner-1s-200px.gif";
 
 const Container = styled.div`
@@ -16,7 +18,7 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-export default function Loading() {
+export default function Loader() {
   return (
     <Container>
       <img src={Spinner} alt="로딩중" width="5%" />

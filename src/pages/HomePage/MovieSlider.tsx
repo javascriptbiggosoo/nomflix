@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+
 import { AnimatePresence, motion } from "framer-motion";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-import { ITmdbMovieResult, makeImagePath } from "../apis/tmdb";
-import useResize from "../hooks/useResize";
-import Thumbnail from "./Thumbnail/Index";
+import { ITmdbMovieResult, makeImagePath } from "../../apis/tmdb";
+import useResize from "../../hooks/useResize";
+import Thumbnail from "../../components/Thumbnail";
 
 interface SliderProps {
   allMedia: ITmdbMovieResult[];
@@ -99,12 +100,6 @@ export default function Slider({
     setLeaving((prev) => !prev);
   };
 
-  const handleThumnailClick = (media: ITmdbMovieResult) => {
-    navigate(`/movies/${media.id}`);
-
-    // console.log(media);
-  };
-
   return (
     <Container>
       <SliderTitle>{sliderTitle}</SliderTitle>
@@ -127,9 +122,6 @@ export default function Slider({
                 movieId={media.id}
                 movieTitle={media.title}
                 key={media.id}
-                onMovieClick={() => {
-                  handleThumnailClick(media);
-                }}
                 movieBackdropPath={makeImagePath(media.backdrop_path, "w400")}
               ></Thumbnail>
             ))}

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+
 import styled from "styled-components";
-import useResize from "../hooks/useResize";
+
+import useResize from "../../hooks/useResize";
 
 interface MovieRowProps {
   children: React.ReactNode;

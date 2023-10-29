@@ -45,7 +45,9 @@ async function fetchFromApi(endpoint: string) {
 }
 
 export function fetchNowPlayingMovie() {
-  return fetchFromApi("movie/now_playing?language=ko-KR&page=1&region=kr");
+  // 이거 한국지역 api 잠시 고장남;
+  // movie/now_playing?language=ko-KR&page=1&region=kr
+  return fetchFromApi("movie/now_playing?language=ko-KR&page=1");
 }
 
 export function fetchUpcomingMovie() {
@@ -117,6 +119,6 @@ export interface IVideo {
 }
 
 export async function fetchMovieTrailer(id: number | string) {
-  const json = await fetchFromApi(`movie/${id}/videos?language=ko-KR`);
+  const json = await fetchFromApi(`movie/${id}/videos?language=en-US`);
   return json.results.filter((item: IVideo) => item.type === "Trailer")[0];
 }

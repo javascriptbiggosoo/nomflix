@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { ITmdbMovieResult, makeImagePath } from "../apis/tmdb";
+
+import { ITmdbMovieResult, makeImagePath } from "../../apis/tmdb";
 
 interface Props {
   bannerMovie: ITmdbMovieResult;

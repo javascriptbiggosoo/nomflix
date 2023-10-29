@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 
 import ThumbnailInfo from "./ThumbnailInfo";
+import { useState } from "react";
+import TrailerModal from "./TrailerModal";
 
 interface IProps {
-  onMovieClick: (id: number) => void;
   movieId: number;
   movieTitle: string;
   movieBackdropPath: string;
@@ -42,27 +43,42 @@ const containerVariants = {
     },
   },
 };
+
 export default function Thumbnail({
-  onMovieClick,
   movieId,
   movieTitle: mediaTitle,
   movieBackdropPath: bgPhoto,
 }: IProps) {
+  const [isThumbnailClicked, setIsThumbnailClicked] = useState(false);
+
+  const handleThumnailClick = () => {
+    setIsThumbnailClicked(true);
+  };
+
+  const handleClickOverlay = () => {
+    setIsThumbnailClicked(false);
+  };
   return (
-    <AnimatePresence>
-      <Container
-        layoutId={"" + movieId}
-        key={movieId}
-        variants={containerVariants}
-        onClick={() => {
-          onMovieClick(movieId);
-        }}
-        whileHover="hover"
-        bgPhoto={bgPhoto}
-        transition={{ type: "tween" }}
-      >
-        <ThumbnailInfo title={mediaTitle}></ThumbnailInfo>
-      </Container>
-    </AnimatePresence>
+    <>
+      <AnimatePresence>
+        <Container
+          layoutId={"" + movieId}
+          key={movieId}
+          variants={containerVariants}
+          onClick={handleThumnailClick}
+          whileHover="hover"
+          bgPhoto={bgPhoto}
+          transition={{ type: "tween" }}
+        >
+          <ThumbnailInfo title={mediaTitle}></ThumbnailInfo>
+        </Container>
+      </AnimatePresence>
+      {isThumbnailClicked && (
+        <TrailerModal
+          movieId={movieId + ""}
+          onClickOverlay={handleClickOverlay}
+        ></TrailerModal>
+      )}
+    </>
   );
 }

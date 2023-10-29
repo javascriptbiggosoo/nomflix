@@ -3,13 +3,13 @@ import {
   ITmdbMovieResult,
   fetchMultiSearch,
   makeImagePath,
-} from "../apis/tmdb";
+} from "../../apis/tmdb";
 import { useQuery } from "@tanstack/react-query";
-import Loader from "../components/UI/Loader";
-import Error from "../components/UI/Error";
+import Loader from "../../components/UI/Loader";
+import Error from "../../components/UI/Error";
 import styled from "styled-components";
-import Thumbnail from "../components/Thumbnail/Index";
-import MovieRow from "../components/MovieContainer";
+import Thumbnail from "../../components/Thumbnail";
+import MovieRow from "./MovieContainer";
 
 const Container = styled.main`
   top: 70px;
@@ -61,9 +61,6 @@ export default function SearchPage() {
         {movies.map((movie: ITmdbMovieResult) => (
           <Thumbnail
             key={movie.id}
-            onMovieClick={() => {
-              return;
-            }}
             movieId={movie.id}
             movieTitle={movie.title}
             movieBackdropPath={makeImagePath(movie.backdrop_path, "w400")}

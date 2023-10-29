@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil";
 import { currentUserState, isLoggedInState } from "./atoms";
 
 import { authService } from "./fbase";
-import Loading from "./components/UI/Loader";
+import Loader from "./components/UI/Loader";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const SearchPage = lazy(() => import("./pages/SearchResultPage"));
@@ -60,7 +60,7 @@ function App() {
   return (
     <>
       <ReactQueryDevtools></ReactQueryDevtools>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loader />}>
         <RouterProvider router={router} />
       </Suspense>
     </>

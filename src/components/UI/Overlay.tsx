@@ -1,6 +1,7 @@
-import { motion } from "framer-motion";
 import { ReactNode } from "react";
 import { createPortal } from "react-dom";
+
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
 const Container = styled(motion.div)`
@@ -19,12 +20,12 @@ const Container = styled(motion.div)`
 
 interface OverlayProps {
   children: ReactNode;
-  hideOverlay: (ev: React.MouseEvent<HTMLDivElement>) => void;
+  onClickOverlay: (ev: React.MouseEvent<HTMLDivElement>) => void;
 }
-export const Overlay = ({ children, hideOverlay }: OverlayProps) => {
+export const Overlay = ({ children, onClickOverlay }: OverlayProps) => {
   return createPortal(
     <Container
-      onClick={hideOverlay}
+      onClick={onClickOverlay}
       transition={{ type: "just" }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

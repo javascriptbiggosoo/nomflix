@@ -1,21 +1,22 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import YouTube from "react-youtube";
 
-import { Overlay } from "./UI/Overlay";
+import { Overlay } from "../UI/Overlay";
 
 import {
   ITmdbMovieDetail,
   IVideo,
   fetchDetailMovie,
   fetchMovieTrailer,
-} from "../apis/tmdb";
+} from "../../apis/tmdb";
 
 interface IProps {
   movieId: string;
+  onClickOverlay: (ev: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const Container = styled(motion.div)`
@@ -30,15 +31,15 @@ const Container = styled(motion.div)`
   color: ${(props) => props.theme.white.lighter};
 `;
 
-const Image = styled(motion.div)<{ imgSrc: string }>`
-  width: 100%;
-  height: 360px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.5)),
-    url(${(props) => props.imgSrc});
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-`;
+// const Image = styled(motion.div)<{ imgSrc: string }>`
+//   width: 100%;
+//   height: 360px;
+//   background-image: linear-gradient(rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.5)),
+//     url(${(props) => props.imgSrc});
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   background-position: center center;
+// `;
 
 const Title = styled.h2`
   position: relative;
@@ -53,9 +54,10 @@ const Overview = styled.div`
   /* top: -45px; */
 `;
 
-export default function TrailerModal({ movieId: mediaId }: IProps) {
-  const navigate = useNavigate();
-
+export default function TrailerModal({
+  movieId: mediaId,
+  onClickOverlay,
+}: IProps) {
   const { data } = useQuery<ITmdbMovieDetail>(
     ["movies", "detail"],
     fetchDetailMovie.bind(null, +mediaId)
@@ -66,11 +68,6 @@ export default function TrailerModal({ movieId: mediaId }: IProps) {
     fetchMovieTrailer.bind(null, mediaId)
   );
 
-  const hideOverlay = (ev: React.MouseEvent<HTMLDivElement>) => {
-    if (ev.target === ev.currentTarget) {
-      navigate(-1);
-    }
-  };
   useEffect(() => {
     // 스크롤 막기
     document.body.style.overflow = "hidden";
@@ -82,7 +79,7 @@ export default function TrailerModal({ movieId: mediaId }: IProps) {
   return (
     <>
       {data ? (
-        <Overlay hideOverlay={hideOverlay}>
+        <Overlay onClickOverlay={onClickOverlay}>
           <AnimatePresence>
             <Container layoutId={mediaId}>
               <YouTube
