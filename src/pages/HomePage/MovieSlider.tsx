@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 
 import { ITmdbMovieResult, makeImagePath } from "../../apis/tmdb";
 import useResize from "../../hooks/useResize";
@@ -63,7 +62,6 @@ export default function Slider({
   allMedia: allMedia,
   sliderTitle,
 }: SliderProps) {
-  const navigate = useNavigate();
   const { width } = useResize();
 
   const [offset, setOffset] = useState(6);

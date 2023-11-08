@@ -1,13 +1,14 @@
+import styled from "styled-components";
+import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
+
 import {
   ITmdbMovieResult,
   fetchMultiSearch,
   makeImagePath,
 } from "../../apis/tmdb";
-import { useQuery } from "@tanstack/react-query";
 import Loader from "../../components/UI/Loader";
 import Error from "../../components/UI/Error";
-import styled from "styled-components";
 import Thumbnail from "../../components/Thumbnail";
 import MovieRow from "./MovieContainer";
 
@@ -19,12 +20,6 @@ const Container = styled.main`
 `;
 const MainTitle = styled.h1`
   font-size: 48px;
-  margin-bottom: 20px;
-`;
-const SectionTitle = styled.h3`
-  font-size: 28px;
-  font-weight: 400;
-
   margin-bottom: 20px;
 `;
 

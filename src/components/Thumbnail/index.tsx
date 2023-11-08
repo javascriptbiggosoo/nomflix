@@ -1,9 +1,11 @@
+import { Suspense, lazy, useState } from "react";
+
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 
 import ThumbnailInfo from "./ThumbnailInfo";
-import { useState } from "react";
-import TrailerModal from "./TrailerModal";
+import Loader from "../UI/Loader";
+const TrailerModal = lazy(() => import("./TrailerModal"));
 
 interface IProps {
   movieId: number;
@@ -74,10 +76,12 @@ export default function Thumbnail({
         </Container>
       </AnimatePresence>
       {isThumbnailClicked && (
-        <TrailerModal
-          movieId={movieId + ""}
-          onClickOverlay={handleClickOverlay}
-        ></TrailerModal>
+        <Suspense fallback={<Loader />}>
+          <TrailerModal
+            movieId={movieId + ""}
+            onClickOverlay={handleClickOverlay}
+          ></TrailerModal>
+        </Suspense>
       )}
     </>
   );

@@ -51,15 +51,14 @@ function App() {
         console.log("no user");
         setIsLoggedIn(false);
 
-        // 사용자가 로그아웃한 상태
-        // 추가 작업...
+        // 사용자가 로그아웃한 상태의 추가 작업...
       }
     });
   }, []);
 
   return (
     <>
-      <ReactQueryDevtools></ReactQueryDevtools>
+      <ReactQueryDevtools />
       <Suspense fallback={<Loader />}>
         <RouterProvider router={router} />
       </Suspense>

@@ -10,19 +10,34 @@ const Container = styled.main`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   position: relative;
   height: 100vh;
+  background-color: #141414;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #e5e5e5;
+  padding: 0 20px; // added some padding for better responsiveness on smaller screens
 `;
 
 const MainTitle = styled.h1`
   font-size: 48px;
   margin-bottom: 20px;
+  color: #e5e5e5;
 `;
 
-const SubTitle = styled.h2`
-  font-size: 24px;
-  align-self: flex-start;
+const LogoutButton = styled.button`
+  background-color: #e50914;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.25s ease;
+  margin-top: 20px;
+
+  &:hover {
+    background-color: #f40612;
+  }
 `;
 
 export default function ProfilePage() {
@@ -38,10 +53,11 @@ export default function ProfilePage() {
         console.log(error);
       });
   };
+
   return (
     <Container>
       <MainTitle>{currentUser?.displayName || "회원"} 님의 프로필</MainTitle>
-      <button onClick={handleClick}>로그아웃</button>
+      <LogoutButton onClick={handleClick}>로그아웃</LogoutButton>
     </Container>
   );
 }

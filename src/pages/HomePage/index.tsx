@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
-import { useMatch } from "react-router-dom";
 
 import Slider from "./MovieSlider";
-import TrailerModal from "../../components/Thumbnail/TrailerModal";
 import Loader from "../../components/UI/Loader";
 import Banner from "./Banner";
 import Error from "../../components/UI/Error";
