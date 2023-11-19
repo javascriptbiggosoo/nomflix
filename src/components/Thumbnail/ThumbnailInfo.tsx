@@ -5,19 +5,6 @@ interface IProps {
   title: string;
 }
 
-const Container = styled(motion.div)`
-  padding: 20px;
-  background-color: ${(props) => props.theme.black.lighter};
-  opacity: 0;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-`;
-
 const infoVariants = {
   hover: {
     opacity: 1,
@@ -36,3 +23,15 @@ export default function ThumbnailInfo({ title }: IProps) {
     </Container>
   );
 }
+const Container = styled(motion.div)`
+  padding: 20px;
+  background-color: ${(props) => props.theme.black.lighter};
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+`;

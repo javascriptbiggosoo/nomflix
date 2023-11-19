@@ -7,3 +7,4 @@ export function getToday(): string {
 
   return `${year}-${month}-${date}`;
 }
+

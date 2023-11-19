@@ -5,6 +5,28 @@ import { useNavigate } from "react-router-dom";
 import { currentUserState } from "../atoms";
 import { useRecoilState } from "recoil";
 
+export default function ProfilePage() {
+  const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+
+  const handleClick = () => {
+    signOut(authService)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  return (
+    <Container>
+      <MainTitle>{currentUser?.displayName || "회원"} 님의 프로필</MainTitle>
+      <LogoutButton onClick={handleClick}>로그아웃</LogoutButton>
+    </Container>
+  );
+}
+
 const Container = styled.main`
   display: flex;
   flex-direction: column;
@@ -39,25 +61,3 @@ const LogoutButton = styled.button`
     background-color: #f40612;
   }
 `;
-
-export default function ProfilePage() {
-  const navigate = useNavigate();
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
-
-  const handleClick = () => {
-    signOut(authService)
-      .then(() => {
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  return (
-    <Container>
-      <MainTitle>{currentUser?.displayName || "회원"} 님의 프로필</MainTitle>
-      <LogoutButton onClick={handleClick}>로그아웃</LogoutButton>
-    </Container>
-  );
-}

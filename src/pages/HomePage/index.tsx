@@ -7,27 +7,23 @@ import Banner from "./Banner";
 import Error from "../../components/UI/Error";
 
 import {
-  ITmdbMovie,
-  fetchNowPlayingMovie,
-  fetchUpcomingMovie,
-} from "../../apis/tmdb";
-
-const Container = styled.main`
-  /* position: relative; */
-`;
+  getNowPlayingMovie,
+  getUpcomingMovie,
+} from "../../apis/tmdb/utils/tmdbApiHelper.js.js";
+import { IMovieReqsponse } from "../../apis/tmdb/types/IMovieReqsponse";
 
 export default function HomePage() {
   const {
     isLoading: isLoadingNowPlaying,
     data: nowPlayingData,
     isError: isErrorNowPlaying,
-  } = useQuery<ITmdbMovie>(["movies", "nowPlaying"], fetchNowPlayingMovie);
+  } = useQuery<IMovieReqsponse>(["movies", "nowPlaying"], getNowPlayingMovie);
 
   const {
     isLoading: isLoadingUpcoming,
     data: upcomingData,
     isError: isErrorUpcoming,
-  } = useQuery<ITmdbMovie>(["movies", "upcoming"], fetchUpcomingMovie);
+  } = useQuery<IMovieReqsponse>(["movies", "upcoming"], getUpcomingMovie);
 
   const isLoading = isLoadingNowPlaying || isLoadingUpcoming;
   const isError = isErrorNowPlaying || isErrorUpcoming;
@@ -54,3 +50,7 @@ export default function HomePage() {
     </Container>
   );
 }
+
+const Container = styled.main`
+  /* position: relative; */
+`;

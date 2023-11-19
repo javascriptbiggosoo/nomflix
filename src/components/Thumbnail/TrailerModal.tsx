@@ -8,64 +8,29 @@ import YouTube from "react-youtube";
 import { Overlay } from "../UI/Overlay";
 
 import {
-  ITmdbMovieDetail,
   IVideo,
-  fetchDetailMovie,
-  fetchMovieTrailer,
-} from "../../apis/tmdb";
+  getDetailMovie,
+  getMovieTrailer,
+} from "../../apis/tmdb/utils/tmdbApiHelper.js.js";
+import { IMovieDetail } from "../../apis/tmdb/types/IMovieDetailResponse";
 
 interface IProps {
   movieId: string;
   onClickOverlay: (ev: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const Container = styled(motion.div)`
-  position: absolute;
-  width: 640px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  background-color: ${(props) => props.theme.black.lighter};
-  border-radius: 15px;
-  overflow: hidden;
-  color: ${(props) => props.theme.white.lighter};
-`;
-
-// const Image = styled(motion.div)<{ imgSrc: string }>`
-//   width: 100%;
-//   height: 360px;
-//   background-image: linear-gradient(rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.5)),
-//     url(${(props) => props.imgSrc});
-//   background-size: cover;
-//   background-repeat: no-repeat;
-//   background-position: center center;
-// `;
-
-const Title = styled.h2`
-  position: relative;
-
-  padding: 10px 20px;
-  font-size: 31px;
-  /* top: -90px; */
-`;
-const Overview = styled.div`
-  position: relative;
-  padding: 10px;
-  /* top: -45px; */
-`;
-
 export default function TrailerModal({
   movieId: mediaId,
   onClickOverlay,
 }: IProps) {
-  const { data } = useQuery<ITmdbMovieDetail>(
+  const { data } = useQuery<IMovieDetail>(
     ["movies", "detail"],
-    fetchDetailMovie.bind(null, +mediaId)
+    getDetailMovie.bind(null, +mediaId)
   );
   console.log(data);
   const { data: trailerData } = useQuery<IVideo>(
     ["media", "trailer"],
-    fetchMovieTrailer.bind(null, mediaId)
+    getMovieTrailer.bind(null, mediaId)
   );
 
   useEffect(() => {
@@ -104,3 +69,38 @@ export default function TrailerModal({
     </>
   );
 }
+
+const Container = styled(motion.div)`
+  position: absolute;
+  width: 640px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  background-color: ${(props) => props.theme.black.lighter};
+  border-radius: 15px;
+  overflow: hidden;
+  color: ${(props) => props.theme.white.lighter};
+`;
+
+// const Image = styled(motion.div)<{ imgSrc: string }>`
+//   width: 100%;
+//   height: 360px;
+//   background-image: linear-gradient(rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.5)),
+//     url(${(props) => props.imgSrc});
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   background-position: center center;
+// `;
+
+const Title = styled.h2`
+  position: relative;
+
+  padding: 10px 20px;
+  font-size: 31px;
+  /* top: -90px; */
+`;
+const Overview = styled.div`
+  position: relative;
+  padding: 10px;
+  /* top: -45px; */
+`;

@@ -3,60 +3,15 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import styled from "styled-components";
 
-import { ITmdbMovieResult, makeImagePath } from "../../apis/tmdb";
 import useResize from "../../hooks/useResize";
 import Thumbnail from "../../components/Thumbnail";
+import { makeImagePath } from "../../apis/tmdb/utils/makeImagePath";
+import { IMovieResult } from "../../apis/tmdb/types/IMovieReqsponse";
 
 interface SliderProps {
-  allMedia: ITmdbMovieResult[];
+  allMedia: IMovieResult[];
   sliderTitle: string;
 }
-
-const gridGap = 5;
-const Container = styled.section`
-  position: relative;
-  height: 300px;
-  margin: 0px 20px;
-`;
-const SliderTitle = styled.h3`
-  position: absolute;
-  top: -120px;
-  font-size: 28px;
-  font-weight: 400;
-`;
-const Row = styled(motion.div)<{ offset: number }>`
-  position: absolute;
-  width: 100%;
-  display: grid;
-  top: -80px;
-
-  grid-template-columns: repeat(${(props) => props.offset}, 1fr);
-  grid-gap: ${gridGap}px;
-  margin-bottom: 5px;
-`;
-
-const NavButton = styled.button`
-  position: absolute;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  z-index: 1;
-  &:hover {
-    background: rgba(0, 0, 0, 0.9);
-  }
-`;
-const PrevButton = styled(NavButton)`
-  left: 10px;
-  z-index: 2;
-`;
-
-const NextButton = styled(NavButton)`
-  right: 10px;
-  z-index: 2;
-`;
 
 export default function Slider({
   allMedia: allMedia,
@@ -128,3 +83,49 @@ export default function Slider({
     </Container>
   );
 }
+
+const gridGap = 5;
+const Container = styled.section`
+  position: relative;
+  height: 300px;
+  margin: 0px 20px;
+`;
+const SliderTitle = styled.h3`
+  position: absolute;
+  top: -120px;
+  font-size: 28px;
+  font-weight: 400;
+`;
+const Row = styled(motion.div)<{ offset: number }>`
+  position: absolute;
+  width: 100%;
+  display: grid;
+  top: -80px;
+
+  grid-template-columns: repeat(${(props) => props.offset}, 1fr);
+  grid-gap: ${gridGap}px;
+  margin-bottom: 5px;
+`;
+
+const NavButton = styled.button`
+  position: absolute;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1;
+  &:hover {
+    background: rgba(0, 0, 0, 0.9);
+  }
+`;
+const PrevButton = styled(NavButton)`
+  left: 10px;
+  z-index: 2;
+`;
+
+const NextButton = styled(NavButton)`
+  right: 10px;
+  z-index: 2;
+`;

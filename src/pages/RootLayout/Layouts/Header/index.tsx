@@ -1,64 +1,26 @@
 import { Link, useMatch } from "react-router-dom";
-import styled from "styled-components";
+
 import {
   motion,
   useAnimation,
   useMotionValueEvent,
   useScroll,
 } from "framer-motion";
+import styled from "styled-components";
 
-import Search from "./Search";
+import Search from "./Header/Search";
 import { useRecoilValue } from "recoil";
-import { isLoggedInState } from "../../../atoms";
-
-const Container = styled.header`
-  position: fixed;
-  align-items: center;
-  width: 100vw;
-  top: 0;
-  color: ${(props) => props.theme.white.lighter};
-  z-index: 999;
-`;
-const Nav = styled(motion.nav)`
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 60px;
-`;
-const Col = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const Logo = styled.svg`
-  margin-right: 50px;
-  width: 95px;
-  fill: ${(props) => props.theme.red};
-`;
-const Items = styled.ul`
-  display: flex;
-  align-items: center;
-`;
-const Item = styled.li`
-  margin-right: 20px;
-  color: ${(props) => props.theme.white.darker};
-  transition: color 0.3s ease-in-out;
-  &:hover {
-    color: ${(props) => props.theme.white.lighter};
-  }
-  position: relative;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-`;
+import { isLoggedInState } from "../../../../atoms";
 
 const NavVariants = {
   top: { backgroundColor: "rgba(0,0,0,0)" },
   scroll: { backgroundColor: "rgba(0,0,0,1)" },
 };
+
 export default function Header() {
   const { scrollY } = useScroll();
   const navAnimation = useAnimation();
   const HomePage = useMatch("/");
-  const TvPage = useMatch("/tv");
   const AuthPage = useMatch("/login");
   const ProfilePage = useMatch("/profile");
   const isLoggedIn = useRecoilValue(isLoggedInState);
@@ -118,3 +80,42 @@ export default function Header() {
     </Container>
   );
 }
+
+const Container = styled.header`
+  position: fixed;
+  align-items: center;
+  width: 100vw;
+  top: 0;
+  color: ${(props) => props.theme.white.lighter};
+  z-index: 999;
+`;
+const Nav = styled(motion.nav)`
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 60px;
+`;
+const Col = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const Logo = styled.svg`
+  margin-right: 50px;
+  width: 95px;
+  fill: ${(props) => props.theme.red};
+`;
+const Items = styled.ul`
+  display: flex;
+  align-items: center;
+`;
+const Item = styled.li`
+  margin-right: 20px;
+  color: ${(props) => props.theme.white.darker};
+  transition: color 0.3s ease-in-out;
+  &:hover {
+    color: ${(props) => props.theme.white.lighter};
+  }
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+`;

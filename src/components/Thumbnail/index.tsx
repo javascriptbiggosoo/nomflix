@@ -13,25 +13,6 @@ interface IProps {
   movieBackdropPath: string;
 }
 
-const Container = styled(motion.div)<{ bgPhoto: string }>`
-  background-color: grey;
-  height: 200px;
-  position: relative;
-  color: white;
-  font-size: 18px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.375)),
-    url(${(props) => props.bgPhoto});
-  background-size: cover;
-  background-position: center center;
-  &:first-child {
-    transform-origin: center left;
-  }
-  &:last-child {
-    transform-origin: center right;
-  }
-  cursor: pointer;
-`;
-
 const containerVariants = {
   normal: { scale: 1 },
   hover: {
@@ -86,3 +67,22 @@ export default function Thumbnail({
     </>
   );
 }
+
+const Container = styled(motion.div)<{ bgPhoto: string }>`
+  background-color: grey;
+  height: 200px;
+  position: relative;
+  color: white;
+  font-size: 18px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.375)),
+    url(${(props) => props.bgPhoto});
+  background-size: cover;
+  background-position: center center;
+  &:first-child {
+    transform-origin: center left;
+  }
+  &:last-child {
+    transform-origin: center right;
+  }
+  cursor: pointer;
+`;

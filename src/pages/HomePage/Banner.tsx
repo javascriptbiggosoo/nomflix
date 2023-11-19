@@ -1,9 +1,19 @@
 import styled from "styled-components";
 
-import { ITmdbMovieResult, makeImagePath } from "../../apis/tmdb";
+import { makeImagePath } from "../../apis/tmdb/utils/makeImagePath";
+import { IMovieResult } from "../../apis/tmdb/types/IMovieReqsponse";
 
 interface Props {
-  bannerMovie: ITmdbMovieResult;
+  bannerMovie: IMovieResult;
+}
+
+export default function Banner({ bannerMovie }: Props) {
+  return (
+    <Container bgPhoto={bannerMovie.backdrop_path}>
+      <Title>{bannerMovie.title}</Title>
+      <OverView>{bannerMovie.overview}</OverView>
+    </Container>
+  );
 }
 
 const Container = styled.section<{ bgPhoto: string }>`
@@ -25,12 +35,3 @@ const Title = styled.h2`
 const OverView = styled.p`
   font-size: 30px;
 `;
-
-export default function Banner({ bannerMovie }: Props) {
-  return (
-    <Container bgPhoto={bannerMovie.backdrop_path}>
-      <Title>{bannerMovie.title}</Title>
-      <OverView>{bannerMovie.overview}</OverView>
-    </Container>
-  );
-}

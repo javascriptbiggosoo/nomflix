@@ -2,15 +2,13 @@ import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 
-import {
-  ITmdbMovieResult,
-  fetchMultiSearch,
-  makeImagePath,
-} from "../../apis/tmdb";
+import { getSearchedMovie } from "../../apis/tmdb/utils/tmdbApiHelper.js.js";
 import Loader from "../../components/UI/Loader";
 import Error from "../../components/UI/Error";
 import Thumbnail from "../../components/Thumbnail";
 import MovieRow from "./MovieContainer";
+import { IMovieResult } from "../../apis/tmdb/types/IMovieReqsponse";
+import { makeImagePath } from "../../apis/tmdb/utils/makeImagePath";
 
 const Container = styled.main`
   top: 70px;
@@ -29,7 +27,7 @@ export default function SearchPage() {
   const keyword = searchParams.get("keyword");
   const { data, isLoading, isError } = useQuery(
     ["search", keyword],
-    fetchMultiSearch.bind(null, keyword as string)
+    getSearchedMovie.bind(null, keyword as string)
   );
 
   if (isLoading) {
@@ -41,7 +39,7 @@ export default function SearchPage() {
   }
 
   const movies = data.results.filter(
-    (result: ITmdbMovieResult) =>
+    (result: IMovieResult) =>
       result.media_type === "movie" && result.backdrop_path
   );
 
@@ -53,7 +51,7 @@ export default function SearchPage() {
       </MainTitle>
 
       <MovieRow>
-        {movies.map((movie: ITmdbMovieResult) => (
+        {movies.map((movie: IMovieResult) => (
           <Thumbnail
             key={movie.id}
             movieId={movie.id}
