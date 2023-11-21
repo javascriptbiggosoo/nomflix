@@ -36,8 +36,8 @@ export function getSearchedMovie(query: string) {
   );
 }
 
-export function getDetailMovie(id: number | string) {
-  return fetchFromApi(`keyword/${id}?language=ko-KR`);
+export function getMovieDetails(id: number | string) {
+  return fetchFromApi(`movie/${id}?language=ko-KR`);
 }
 
 export interface IVideo {

@@ -9,7 +9,7 @@ import { Overlay } from "../UI/Overlay";
 
 import {
   IVideo,
-  getDetailMovie,
+  getMovieDetails,
   getMovieTrailer,
 } from "../../apis/tmdb/utils/tmdbApiHelper.js.js";
 import { IMovieDetail } from "../../apis/tmdb/types/IMovieDetailResponse";
@@ -19,18 +19,15 @@ interface IProps {
   onClickOverlay: (ev: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-export default function TrailerModal({
-  movieId: mediaId,
-  onClickOverlay,
-}: IProps) {
+export default function TrailerModal({ movieId, onClickOverlay }: IProps) {
   const { data } = useQuery<IMovieDetail>(
     ["movies", "detail"],
-    getDetailMovie.bind(null, +mediaId)
+    getMovieDetails.bind(null, movieId)
   );
   console.log(data);
   const { data: trailerData } = useQuery<IVideo>(
     ["media", "trailer"],
-    getMovieTrailer.bind(null, mediaId)
+    getMovieTrailer.bind(null, movieId)
   );
 
   useEffect(() => {
@@ -46,7 +43,7 @@ export default function TrailerModal({
       {data ? (
         <Overlay onClickOverlay={onClickOverlay}>
           <AnimatePresence>
-            <Container layoutId={mediaId}>
+            <Container layoutId={movieId}>
               <YouTube
                 videoId={trailerData?.key}
                 opts={{

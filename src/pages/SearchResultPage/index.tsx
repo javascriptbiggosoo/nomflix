@@ -1,3 +1,4 @@
+// TODO: 검색결과 1페이지보다 많이
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
@@ -32,11 +33,11 @@ export default function SearchPage() {
   console.log(data);
 
   if (isLoading) {
-    return <Loader></Loader>;
+    return <Loader />;
   }
 
   if (isError) {
-    return <Error></Error>;
+    return <Error />;
   }
 
   const movies = data.results.filter(
