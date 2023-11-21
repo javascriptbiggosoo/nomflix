@@ -23,6 +23,12 @@ export function getNowPlayingMovie() {
 export function getUpcomingMovie() {
   return fetchFromApi("movie/upcoming?language=ko-KR&page=1&region=kr");
 }
+export function getTopRatedMovie() {
+  return fetchFromApi("movie/top_rated?language=ko-KR&page=1&region=kr");
+}
+export function getPopularMovie() {
+  return fetchFromApi("movie/popular?language=ko-KR&page=1&region=ko");
+}
 
 export function getSearchedMovie(query: string) {
   return fetchFromApi(
@@ -31,7 +37,7 @@ export function getSearchedMovie(query: string) {
 }
 
 export function getDetailMovie(id: number | string) {
-  return fetchFromApi(`movie/${id}?language=ko-KR`);
+  return fetchFromApi(`keyword/${id}?language=ko-KR`);
 }
 
 export interface IVideo {

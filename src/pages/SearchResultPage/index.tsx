@@ -29,6 +29,7 @@ export default function SearchPage() {
     ["search", keyword],
     getSearchedMovie.bind(null, keyword as string)
   );
+  console.log(data);
 
   if (isLoading) {
     return <Loader></Loader>;
