@@ -1,4 +1,4 @@
-import{k as i,x as a,y as c,j as o,s as n,z as l,w as d}from"./index-85ed9fc2.js";const u=n.main`
+import{k as i,x as a,y as c,j as o,z as l,s as n,w as d}from"./index-2bab09fc.js";function m(){const t=i(),[e,x]=a(c),s=()=>{l(d).then(()=>{t("/")}).catch(r=>{console.log(r)})};return o.jsxs(u,{children:[o.jsxs(p,{children:[(e==null?void 0:e.displayName)||"회원"," 님의 프로필"]}),o.jsx(g,{onClick:s,children:"로그아웃"})]})}const u=n.main`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,4 +27,4 @@ import{k as i,x as a,y as c,j as o,s as n,z as l,w as d}from"./index-85ed9fc2.js
   &:hover {
     background-color: #f40612;
   }
-`;function m(){const t=i(),[e,x]=a(c),s=()=>{l(d).then(()=>{t("/")}).catch(r=>{console.log(r)})};return o.jsxs(u,{children:[o.jsxs(p,{children:[(e==null?void 0:e.displayName)||"회원"," 님의 프로필"]}),o.jsx(g,{onClick:s,children:"로그아웃"})]})}export{m as default};
+`;export{m as default};
