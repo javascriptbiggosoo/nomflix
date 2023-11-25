@@ -7,6 +7,7 @@ import useResize from "../../hooks/useResize";
 import Thumbnail from "../../components/Thumbnail";
 import { makeImagePath } from "../../apis/tmdb/utils/makeImagePath";
 import { IMovieResult } from "../../apis/tmdb/types/IMovieReqsponse";
+import { randomUUID } from "crypto";
 
 interface SliderProps {
   allMedia: IMovieResult[];
@@ -76,7 +77,7 @@ export default function Slider({
                 movieTitle={media.title}
                 key={media.id}
                 movieBackdropPath={makeImagePath(media.backdrop_path, "w400")}
-              ></Thumbnail>
+              />
             ))}
         </Row>
       </AnimatePresence>

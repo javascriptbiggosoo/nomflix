@@ -18,7 +18,7 @@ async function fetchFromApi(endpoint: string) {
 export function getNowPlayingMovie() {
   // 이거 한국지역 api 잠시 고장남;
   // movie/now_playing?language=ko-KR&page=1&region=kr
-  return fetchFromApi("movie/now_playing?language=ko-KR&page=1");
+  return fetchFromApi("movie/now_playing?language=ko-KR&page=1&region=kr");
 }
 export function getUpcomingMovie() {
   return fetchFromApi("movie/upcoming?language=ko-KR&page=1&region=kr");
