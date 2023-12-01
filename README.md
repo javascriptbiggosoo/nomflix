@@ -24,6 +24,8 @@ Nomflix는 React와 TypeScript를 사용하여 만든 영화 정보 웹 애플�
 
 8. **npm CRA에서 yarn Vite로의 전환**: 프로젝트의 빌드 도구를 npm의 Create React App(CRA)에서 Vite로 전환하였습니다. 이를 통해 빌드 속도를 향상시키고, 개발 환경을 더욱 효율적으로 만들었습니다.
 
+9. **홈 화면 슬라이더의 Lazy Loading 적용**: 홈 화면에 있는 슬라이더 컴포넌트들에 lazy loading을 적용하여 성능을 향상시켰습니다. 이는 불필요한 자원 로딩을 줄이고, 초기 로드 시간을 단축하여 사용자 경험을 개선합니다.
+
 ## 프로젝트 실행 방법
 
 1. 프로젝트를 클론합니다: `git clone https://github.com/javascriptbiggosoo/nomflix.git`

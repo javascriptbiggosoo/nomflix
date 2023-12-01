@@ -8,7 +8,7 @@ import {
 } from "framer-motion";
 import styled from "styled-components";
 
-import Search from "./Header/Search";
+import Search from "./Search";
 import { useRecoilValue } from "recoil";
 import { isLoggedInState } from "../../../../atoms";
 
